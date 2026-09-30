@@ -30,7 +30,8 @@ lunar-blog/
 │   │   └── rss.xml.ts
 │   └── styles/site.css       # the small unlayered stylesheet (see conventions)
 ├── design/                   # og-image.py (writes og-image.svg) and
-│                             # og-image-png.sh (renders public/og-image.png)
+│                             # og-image-png.sh (renders public/og-image.png);
+│                             # apple-touch-icon.sh (renders it from favicon.svg)
 └── public/                   # favicon, og-image.png, robots.txt
 ```
 

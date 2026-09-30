@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- LunarCSS's favicon box: the accent, top-right corner cut like the
+       buttons. Every edge is on an even unit, so it lands on whole pixels at
+       16px and 32px. -->
+  <path d="M0 0H24L32 8V32H0Z" fill="#ff5623"/>
+  <!-- Lines of writing, in the dark page color: two short paragraphs, each
+       ending on a shorter line. The first line stops short of the cut. -->
+  <path d="M4 4H24V8H4ZM4 10H16V14H4ZM4 18H28V22H4ZM4 24H20V28H4Z" fill="#2a2c2f"/>
+</svg>
