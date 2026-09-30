@@ -27,12 +27,13 @@ lunar-blog/
 │   │   ├── tags/[tag].astro  # posts with that tag
 │   │   ├── about.md          # example standalone page, using Base
 │   │   ├── 404.astro
-│   │   └── rss.xml.ts
+│   │   ├── rss.xml.ts
+│   │   └── robots.txt.ts     # robots.txt, with the sitemap URL from `site` + `base`
 │   └── styles/site.css       # the small unlayered stylesheet (see conventions)
 ├── design/                   # og-image.py (writes og-image.svg) and
 │                             # og-image-png.sh (renders public/og-image.png);
 │                             # apple-touch-icon.sh (renders it from favicon.svg)
-└── public/                   # favicon, og-image.png, robots.txt
+└── public/                   # favicon.svg, apple-touch-icon.png, og-image.png
 ```
 
 Treat this as the target shape, not a fixed contract. If current Astro conventions differ (file names, collection config location), follow Astro and update this file.
