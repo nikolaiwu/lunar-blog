@@ -15,6 +15,7 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 - A `posts` content collection with a typed schema (title, description, dates, tags, drafts, hero image with required alt text)
 - Eight sample posts about building LunarCSS, plus a draft, including an "every Markdown element" reference post and an MDX post
 - MDX support, and a classless `Figure` component for images with captions
+- A horizontal rule between a post and its footnotes
 - Syntax highlighting at build time with Catppuccin Latte and Mocha, following the system's light or dark mode, with no JavaScript
 - Post pages at `/posts/<id>/`: title, published and updated dates, tags, a responsive hero image, the post, and links to the newer and older posts
 - Local theme mode: `LUNARCSS_LOCAL=../lunarcss pnpm dev` compiles the theme from a LunarCSS checkout's SCSS source, for working on the theme and the blog together

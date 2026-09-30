@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { styleText } from "node:util";
+import { satteri } from "@astrojs/markdown-satteri";
 import mdx from "@astrojs/mdx";
 import { defineConfig } from "astro/config";
 
@@ -12,6 +13,26 @@ const site = process.env.SITE_URL ?? "https://nikolaiwu.github.io";
 const base = process.env.BASE_PATH ?? "/lunar-blog";
 
 const projectRoot = fileURLToPath(new URL(".", import.meta.url));
+
+// Puts a horizontal rule before a post's footnotes, so the notes read as
+// separate from the post. It's a real <hr>, so LunarCSS draws it as its dotted
+// band; the footnotes section is generated, so there's no Markdown to add it to.
+// A hast plugin for Sätteri, Astro's Markdown processor.
+const footnotesRule = {
+  name: "footnotes-rule",
+  element: {
+    filter: ["section"],
+    visit(node, ctx) {
+      if (!("dataFootnotes" in (node.properties ?? {}))) return;
+      ctx.insertBefore(node, {
+        type: "element",
+        tagName: "hr",
+        properties: {},
+        children: [],
+      });
+    },
+  },
+};
 
 // Local theme mode, for working on LunarCSS itself:
 //
@@ -65,6 +86,7 @@ export default defineConfig({
   base,
   integrations: [mdx()],
   markdown: {
+    processor: satteri({ hastPlugins: [footnotesRule] }),
     shikiConfig: {
       // Code is highlighted at build time, with no JS in the browser. Each
       // token gets both themes' colours as --shiki-light / --shiki-dark, and
