@@ -17,5 +17,6 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 - MDX support, and a classless `Figure` component for images with captions
 - A horizontal rule between a post and its footnotes
 - Syntax highlighting at build time with Catppuccin Latte and Mocha, following the system's light or dark mode, with no JavaScript
+- Home page: the site intro and the latest posts as a card grid, with a `PostCard` component shared by every list of posts
 - Post pages at `/posts/<id>/`: title, published and updated dates, tags, a responsive hero image, the post, and links to the newer and older posts
 - Local theme mode: `LUNARCSS_LOCAL=../lunarcss pnpm dev` compiles the theme from a LunarCSS checkout's SCSS source, for working on the theme and the blog together

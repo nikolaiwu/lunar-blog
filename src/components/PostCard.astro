@@ -1,0 +1,50 @@
+---
+// A post as a card, for lists of posts: the home page, the archive and the
+// tag pages. LunarCSS draws every <article> as a card, with the header's
+// dashed rule and the footer's striped band.
+//
+// Put the cards in a wrapper that holds nothing but cards, and the layout
+// stylesheet turns it into a grid:
+//
+//   <div>{posts.map((post) => <PostCard post={post} />)}</div>
+//
+// headingLevel keeps the page's heading order: 2 under the page's h1, 3 under
+// an h2 like "Latest posts".
+import FormattedDate from "./FormattedDate.astro";
+import { url } from "../lib/url";
+import type { Post } from "../lib/posts";
+
+interface Props {
+  post: Post;
+  headingLevel?: 2 | 3;
+}
+
+const { post, headingLevel = 2 } = Astro.props;
+const { title, description, pubDate, tags, draft } = post.data;
+const Heading = `h${headingLevel}` as const;
+---
+
+<article>
+  <header>
+    <Heading>
+      <a href={url(`posts/${post.id}/`)}>{title}</a>
+    </Heading>
+  </header>
+  <p>{description}</p>
+  <footer>
+    <FormattedDate date={pubDate} />
+    {draft && " · Draft"}
+    {tags.length > 0 && (
+      <>
+        {" "}
+        ·{" "}
+        {tags.map((tag, i) => (
+          <>
+            {i > 0 && ", "}
+            <a href={url(`tags/${tag}/`)}>{tag}</a>
+          </>
+        ))}
+      </>
+    )}
+  </footer>
+</article>
