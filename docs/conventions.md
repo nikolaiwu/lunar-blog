@@ -11,7 +11,7 @@
 ## Markup
 
 - No `class` attributes, no inline `style`, no component `<style>` blocks. Astro's scoped styles are unlayered and would override the theme. If the markup can't express something, it's either a theme gap or a rule in `site.css`.
-- `data-*` and ARIA attributes are fine as hooks (e.g. `data-theme-toggle`, `aria-current`).
+- `data-*` and ARIA attributes are fine as hooks (e.g. `aria-current`, `aria-label` on a second `nav`).
 - Semantic elements first: `header`, `nav`, `main`, `article`, `aside`, `footer`, `time`, `figure`/`figcaption`. Keep the heading levels in order on every page.
 
 ## `site.css`
@@ -29,7 +29,7 @@ Keep them few: `astro`, `@nikolaiwu/lunarcss`, `@astrojs/mdx`, `@astrojs/rss`, `
 - Visible focus comes from the theme, so don't remove outlines.
 - Images need alt text, which the schema enforces for hero images.
 - `<html lang>` comes from `site.config.ts`.
-- The theme toggle has an accessible name and state.
+- Check contrast in both light and dark. The site follows the system setting, so switch it in the OS or emulate `prefers-color-scheme` in dev tools.
 - Check each page with the keyboard, and in Windows contrast mode if possible (the theme supports forced colors).
 
 ## Git and issues

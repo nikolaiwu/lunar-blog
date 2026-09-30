@@ -42,7 +42,7 @@ The theme draws with `::before` and `::after` on several elements (cards, `h1`â€
 ## Theming
 
 - Customize through `--lunar-*` tokens on `:root` in `site.css`. The main pair is `--lunar-light` / `--lunar-dark`, plus `--lunar-accent`. The starter ships with the theme's defaults, and the README shows users how to change them.
-- Light and dark come from `light-dark()` plus `color-scheme`. `data-theme="light|dark"` on `<html>` forces a mode, and without it the page follows the system setting.
+- Light and dark come from `light-dark()` plus `color-scheme`. `data-theme="light|dark"` on `<html>` forces a mode, and without it the page follows the system setting. The blog never sets it, so it always follows the system (see [architecture.md](architecture.md), "Light and dark").
 - Never use raw colours or `--color-*` primitives.
 
 ## Changing the theme itself

@@ -17,7 +17,7 @@ These rules apply everywhere, so they're stated up front:
 - **Theme gaps go upstream.** If an element looks wrong, record it in `docs/theme-gaps.md` and propose an issue on `nikolaiwu/lunarcss`. Don't work around it with page CSS unless the brief allows it.
 - **Tokens only.** Any CSS we do write uses `var(--lunar-*)` tokens, never raw colours or sizes.
 - **No third-party requests.** Fonts are self-hosted through the LunarCSS fonts stylesheet. No Google Fonts, analytics, embeds or CDN scripts in the template.
-- **Zero client JS except the theme toggle.** No UI framework islands and no `ClientRouter` / view transitions.
+- **Zero client JS.** Light and dark follow the reader's system setting through the theme's `light-dark()`; there's no theme toggle. No UI framework islands and no `ClientRouter` / view transitions.
 - **Check Astro's current docs, not memory.** Astro ships major versions often, and APIs such as content collections, the Markdown config and image handling change between them. Read https://docs.astro.build before using an API, and follow the current version's conventions.
 - Run `pnpm format` after editing.
 

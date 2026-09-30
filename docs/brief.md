@@ -24,7 +24,7 @@ LunarCSS is a classless theme: the CSS stays MIT and free, and the plan is to bu
 - Tag index and a page per tag
 - RSS feed, sitemap, and a 404 page
 - An about page as the example of a standalone page
-- Light/dark toggle that follows the system setting until the reader picks, with no flash on load
+- Light and dark modes that follow the reader's system setting, with no JS and no flash on load
 - LunarCSS theme, fonts and layout stylesheets, all self-hosted through npm
 - Syntax highlighting that follows light/dark (build time, no JS)
 - SEO basics: `<title>`, description, canonical URL, Open Graph and Twitter tags, an OG image
@@ -36,6 +36,7 @@ LunarCSS is a classless theme: the CSS stays MIT and free, and the plan is to bu
 
 - Client-side search, comments, newsletter forms, analytics (all of these add third-party requests or JS)
 - i18n, multiple authors, series or collections beyond tags
+- A light/dark toggle. The site follows the system setting, which keeps it free of JS. (Tried during the scaffold and dropped to keep it simple; LunarCSS supports one through `data-theme` if a user wants to add it.)
 - UI framework integrations (React, Vue, Svelte) and view transitions
 - Tailwind or any other CSS framework
 - Paid features. This repo stays free and MIT; paid templates go in a separate private repo later
@@ -44,7 +45,7 @@ Nice to have, if they come cheap: reading time, a table of contents on long post
 
 ## Milestones
 
-1. **Scaffold:** Astro project, LunarCSS imports, base layout with the page shell, theme toggle, Prettier. `pnpm dev` and `pnpm build` both work.
+1. **Scaffold:** Astro project, LunarCSS imports, base layout with the page shell, Prettier. `pnpm dev` and `pnpm build` both work.
 2. **Content:** the collection schema, sample posts, and the post page with syntax highlighting.
 3. **Navigation:** home, archive with pagination, tag pages, previous/next, 404, about.
 4. **Feeds and SEO:** RSS, sitemap, meta tags, OG image.
@@ -57,7 +58,7 @@ Nice to have, if they come cheap: reading time, a table of contents on long post
 - `pnpm build` passes with no warnings, and `pnpm astro check` is clean
 - No `class=` in any `.astro` or `.mdx` file we wrote (`grep -rn 'class=' src/` only finds generated or commented cases)
 - The built site loads nothing from other origins (check the network panel)
-- The only JS on the page is the theme toggle
+- No JS on the page at all (no `<script>` in the built HTML)
 - Lighthouse 100 for accessibility, best practices and SEO on the home and post pages
 - It works at 360px width with no horizontal page scroll (tables and `pre` scroll inside themselves)
 - A fresh `npm create astro@latest -- --template nikolaiwu/lunar-blog` install builds and runs

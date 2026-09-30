@@ -1,6 +1,6 @@
 # Architecture
 
-A static Astro site (`output: "static"`, no adapter). Everything is rendered at build time; the only script in the browser is the theme toggle.
+A static Astro site (`output: "static"`, no adapter). Everything is rendered at build time, and no script runs in the browser.
 
 ## File layout
 
@@ -15,7 +15,7 @@ lunar-blog/
 │   │   ├── Base.astro        # <html>, head, page shell (header, main, footer)
 │   │   └── Post.astro        # a single post
 │   ├── components/           # Head/SEO, PostCard, PostGrid, Pagination,
-│   │                         # TagList, FormattedDate, ThemeToggle
+│   │                         # TagList, FormattedDate
 │   ├── lib/
 │   │   ├── url.ts            # url(): base-path-aware internal links
 │   │   └── posts.ts          # published posts, newest first
@@ -75,17 +75,16 @@ A typed object: `title`, `description`, `author`, `lang` (for `<html lang>`), `n
 ## Markdown pipeline
 
 - **GFM** (tables, task lists, strikethrough, footnotes) is on by default in Astro.
-- **Syntax highlighting:** Astro's built-in Shiki at build time, with two themes, a light and a dark one (LunarCSS's showcase uses Catppuccin Latte and Mocha), and `defaultColor: false`. The tokens then carry `--shiki-light` / `--shiki-dark` custom properties instead of inline colours, and one rule in `site.css` picks between them with `light-dark()`, so highlighting follows the theme toggle with no JS. `defaultColor: false` also keeps Shiki from painting a background on `pre`, so the theme's code block look stays. Check the generated HTML after any Astro upgrade.
+- **Syntax highlighting:** Astro's built-in Shiki at build time, with two themes, a light and a dark one (LunarCSS's showcase uses Catppuccin Latte and Mocha), and `defaultColor: false`. The tokens then carry `--shiki-light` / `--shiki-dark` custom properties instead of inline colours, and one rule in `site.css` picks between them with `light-dark()`, so highlighting follows the system's light or dark setting with no JS. `defaultColor: false` also keeps Shiki from painting a background on `pre`, so the theme's code block look stays. Check the generated HTML after any Astro upgrade.
 - **Footnotes:** remark-rehype puts the "Footnotes" heading in an `h2` with an `sr-only` class. We don't style classes, so either configure the label (Astro exposes `markdown.remarkRehype` options) or accept a visible heading. Decide by how it looks in the theme, and log it in [theme-gaps.md](theme-gaps.md).
 - **Heading anchors:** Astro adds `id`s to headings. If we add visible anchor links (rehype-autolink-headings or similar), configure it to emit no classes and check how the theme's link chip and heading marks look together.
 - **Images** in posts go through Astro's image pipeline (`sharp`). Always provide alt text.
 - **MDX:** `@astrojs/mdx`. The sample MDX post shows a component, but components must follow the no-classes rule too.
 
-## Theme toggle
+## Light and dark
 
-A `<button>` in the header nav. Two parts:
+The site follows the reader's system setting and has no theme toggle. LunarCSS's colours are `light-dark()` values, so the browser picks the mode from `prefers-color-scheme` with no JS, and there's nothing to flash on load. Never set `data-theme` on `<html>`: it would force one mode for everyone.
 
-1. An `is:inline` script in `<head>`, before the stylesheets, that reads `localStorage.theme` and sets `data-theme` on `<html>` before first paint. It must be inline, because a bundled module runs too late and the page would flash.
-2. A normal (bundled) `<script>` that toggles between light and dark and saves the choice. Base it on LunarCSS's `src/theme-toggle.js`: with no saved choice it reads `prefers-color-scheme` to work out the current theme.
+A toggle was built during the scaffold and dropped to keep the starter simple and free of JS. A user who wants one can add it: an inline `<head>` script that applies a saved `data-theme` before first paint, plus a button that flips and saves it (LunarCSS's `src/theme-toggle.js` is the model). Note that `<button hidden>` stays visible with the theme until [nikolaiwu/lunarcss#4](https://github.com/nikolaiwu/lunarcss/issues/4) is fixed.
 
-The button needs an accessible name. Use `aria-pressed` or an updated label so screen readers hear the state.
+To check both modes, switch the OS setting, or emulate `prefers-color-scheme` in the browser's dev tools.
