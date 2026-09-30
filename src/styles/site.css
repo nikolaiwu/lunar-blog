@@ -31,3 +31,26 @@ main > article > header {
   padding-bottom: 0;
   background: none;
 }
+
+/*
+  Code highlighting. Shiki runs at build time and gives each token both of
+  its colours as custom properties (astro.config.mjs: defaultColor: false),
+  so this picks one with light-dark(), following the page's mode. The theme
+  can't do this, since the colours come from Shiki. It styles only the tokens:
+  the pre keeps the theme's own background and border. --shiki-light and
+  --shiki-dark are the one exception to the tokens-only rule.
+*/
+pre [style*="--shiki-light"] {
+  color: light-dark(var(--shiki-light), var(--shiki-dark));
+}
+
+/*
+  LunarCSS opts pre out of forced colours to keep its edge, and that carries
+  down to the code inside. In a Windows contrast theme, give the tokens the
+  system text colour instead of Shiki's fixed ones.
+*/
+@media (forced-colors: active) {
+  pre [style*="--shiki-light"] {
+    color: CanvasText;
+  }
+}

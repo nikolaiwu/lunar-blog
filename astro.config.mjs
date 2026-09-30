@@ -64,5 +64,19 @@ export default defineConfig({
   site,
   base,
   integrations: [mdx()],
+  markdown: {
+    shikiConfig: {
+      // Code is highlighted at build time, with no JS in the browser. Each
+      // token gets both themes' colours as --shiki-light / --shiki-dark, and
+      // one rule in site.css picks between them with light-dark(), so code
+      // follows the page's light or dark mode.
+      themes: { light: "catppuccin-latte", dark: "catppuccin-mocha" },
+      // No inline colours or background: the theme's pre look stays
+      defaultColor: false,
+      // No inline overflow style: LunarCSS's pre scrolls sideways itself,
+      // and wraps code when printing
+      wrap: null,
+    },
+  },
   vite: localTheme(process.env.LUNARCSS_LOCAL),
 });
