@@ -44,5 +44,6 @@ export const siteConfig: SiteConfig = {
   homePostCount: 6,
   postsPerPage: 6,
   ogImage: "og-image.png",
-  ogImageAlt: "Lunar Blog: a blog page styled by LunarCSS, in light and dark.",
+  ogImageAlt:
+    "The Lunar Blog card: its name and tagline beside a post card from the blog, split between the light and dark themes.",
 };

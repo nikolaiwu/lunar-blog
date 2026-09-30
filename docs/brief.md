@@ -65,5 +65,5 @@ Nice to have, if they come cheap: reading time, a table of contents on long post
 
 ## Open questions
 
-- **Maintainer docs in the template.** `create astro --template` copies the whole repo, so this CLAUDE.md and `docs/` would reach every user. They get rewritten for users before v1.0.0; the task list is in `PUBLISHING.local.md`, section 0.6. Ask the user about what ships.
+- **Maintainer docs in the template.** `create astro --template` copies the whole repo, so this CLAUDE.md and `docs/` would reach every user. They get rewritten for users before v1.0.0; the task list is in `PUBLISHING.local.md`, section 0.6. Ask the user about what ships. The same goes for `design/` (the social card generator): it's useful to users who want their own preview image, but it's tied to the demo's content and the maintainer's tools (Figma, headless Chrome), so decide whether it ships as is, gets generalised, or moves out of the template.
 - **Repo name.** `lunar-blog` is the working name. Changing it touches the install command, the Pages `base` path and the README.
