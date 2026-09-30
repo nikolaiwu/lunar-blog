@@ -18,7 +18,7 @@
 ## `site.css`
 
 - Unlayered, and as short as possible. Every rule has a comment saying why it exists: a documented User Guide pattern, Shiki colours, or a known gap with a link to [theme-gaps.md](theme-gaps.md).
-- Values come from `var(--lunar-*)`. The one exception is Shiki's `--shiki-light` / `--shiki-dark`.
+- Values come from `var(--lunar-*)`. The exceptions are Shiki's `--shiki-light` / `--shiki-dark`, and CSS system colours (`CanvasText` and so on) inside `@media (forced-colors: active)`, the way the theme itself handles that mode.
 - Structural selectors only, no classes. The same rule as the theme.
 
 ## Dependencies
