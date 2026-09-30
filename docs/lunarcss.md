@@ -61,7 +61,7 @@ When something is a theme gap, not a starter problem:
 How it's wired in `astro.config.mjs`, only when `LUNARCSS_LOCAL` is set:
 
 - `vite.resolve.alias` maps exactly `@nikolaiwu/lunarcss` to `<path>/src/scss/main.scss` and `@nikolaiwu/lunarcss/layout` to `<path>/src/scss/layout.scss`. Use anchored regexes (`/^@nikolaiwu\/lunarcss$/`) so the two don't catch each other, or `/fonts`. Fonts always come from the npm package: `fonts.scss` only resolves inside the LunarCSS build, and fonts rarely change.
-- `vite.server.fs.allow` gets the LunarCSS path added, next to `searchForWorkspaceRoot(process.cwd())`, since Vite refuses to serve files outside the project otherwise.
+- `vite.server.fs.allow` lists the project root and `<path>/src/scss`, since Vite refuses to serve files outside the project otherwise. Setting `allow` replaces Vite's default, so the project root has to be in the list. It's written out instead of using Vite's `searchForWorkspaceRoot()`, because pnpm doesn't let the config import `vite` without adding it as a dependency, and in this single-package repo both give the same folder.
 - The config fails fast with a clear error if `<path>/src/scss/main.scss` doesn't exist, and logs one line saying the local theme is in use, so it's never on by accident.
 - `sass` is a dev dependency (Vite needs it to compile the SCSS). Keep its range in line with LunarCSS's.
 
@@ -72,3 +72,5 @@ Things to keep in mind:
 - Local mode is the unminified source, not the published `dist/`. The difference is only minification and the banner, but the final check is always a normal `pnpm build` against the released version.
 - Don't commit blog changes that depend on an unreleased theme fix (such as removing a `site.css` workaround) until that LunarCSS version is released and the dependency is bumped. Otherwise `main` breaks for everyone.
 - `pnpm build` and `pnpm preview` also respect `LUNARCSS_LOCAL`, which is handy for checking a theme change in the built blog before releasing LunarCSS.
+- After you save a partial, Vite recompiles the theme module and hot-reloads it. The CSS that Astro inlines into the page HTML for first paint can lag behind, though: in a test with curl, a fresh page request still carried the old value while the module had the new one. If a reload looks stale, restart the dev server.
+- Astro's dev server keeps running in the background after you close the terminal. Stop it with `pnpm astro dev stop`, and check with `pnpm astro dev status`.
