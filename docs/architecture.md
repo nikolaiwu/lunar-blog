@@ -51,7 +51,7 @@ One `posts` collection, loaded from `src/content/posts/` with the glob loader. T
 
 Put the "published posts, newest first" query in one helper (e.g. `src/lib/posts.ts`) so every page filters drafts the same way.
 
-Post ids come from file names. A post id that's only a number would collide with an archive page (`/posts/2/`), so reject that with a clear build error.
+Post ids come from file names: `hello-world.md` and `hello-world/index.md` both give `hello-world`. Use the folder form when a post has its own images. A post id that's only a number would collide with an archive page (`/posts/2/`), so `getPosts()` in `src/lib/posts.ts` stops the build with an error naming the file. The check lives there, not in the schema, because the schema never sees the id and Astro's default id function isn't exported.
 
 ## Routes
 
