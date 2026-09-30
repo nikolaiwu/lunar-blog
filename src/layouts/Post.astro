@@ -19,7 +19,13 @@ const { post, newer, older } = Astro.props;
 const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
 ---
 
-<Base title={title} description={description}>
+<Base
+  title={title}
+  description={description}
+  image={heroImage}
+  imageAlt={post.data.heroImageAlt}
+  article={{ published: pubDate, modified: updatedDate, tags }}
+>
   <article>
     <header>
       <h1>{title}</h1>

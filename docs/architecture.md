@@ -14,8 +14,8 @@ lunar-blog/
 │   ├── layouts/
 │   │   ├── Base.astro        # <html>, head, page shell (header, main, footer)
 │   │   └── Post.astro        # a single post
-│   ├── components/           # Figure, Head/SEO, PostCard, PostGrid, Pagination,
-│   │                         # TagList, FormattedDate
+│   ├── components/           # Figure, FormattedDate, PostCard, Seo
+│   │                         # (grids, pagination and tag links are inline)
 │   ├── lib/
 │   │   ├── url.ts            # url(): base-path-aware internal links
 │   │   └── posts.ts          # published posts, newest first
@@ -70,7 +70,15 @@ In `Base.astro` the site title in `body > header` is a link in a `p`, not a head
 
 ## `site.config.ts`
 
-A typed object: `title`, `description`, `author`, `lang` (for `<html lang>`), `nav` (label and href pairs), `homePostCount`, `postsPerPage`, and the default OG image. Pages read from here, never hard-coded strings, so a new user renames the blog in one place.
+A typed object: `title`, `description`, `author`, `lang` (for `<html lang>`), `nav` (label and href pairs), `homePostCount`, `postsPerPage`, and the default OG image with its alt text. Pages read from here, never hard-coded strings, so a new user renames the blog in one place.
+
+## SEO and link previews
+
+`components/Seo.astro` writes the `<head>` metadata for every page, through `Base.astro`: `<title>`, description, canonical URL, Open Graph tags and `twitter:card` (Twitter/X falls back to the `og:` tags, so there are no other `twitter:*` tags). Every URL is absolute and includes the base path.
+
+- Posts pass `article` (published and updated times, tags), so they get `og:type="article"` and `article:*` tags.
+- A post with a hero image uses it as its preview, resized by `getImage()` to a 1200px-wide JPEG. Every other page uses `siteConfig.ogImage` from `public/`.
+- The 404 page passes `noindex`: it gets `<meta name="robots" content="noindex">` and no canonical URL.
 
 ## Markdown pipeline
 

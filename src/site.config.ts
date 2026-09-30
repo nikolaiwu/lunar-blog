@@ -26,6 +26,8 @@ export interface SiteConfig {
   // The social preview image for pages that don't set their own: a path
   // inside public/, without a leading slash. 1200×630 works everywhere.
   ogImage: string;
+  // What the social preview image shows, for people who can't see it.
+  ogImageAlt: string;
 }
 
 export const siteConfig: SiteConfig = {
@@ -42,4 +44,5 @@ export const siteConfig: SiteConfig = {
   homePostCount: 6,
   postsPerPage: 6,
   ogImage: "og-image.png",
+  ogImageAlt: "Lunar Blog: a blog page styled by LunarCSS, in light and dark.",
 };

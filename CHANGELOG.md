@@ -22,6 +22,7 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 - Tag pages: `/tags/` lists every tag with its post count, and `/tags/<tag>/` shows that tag's posts. Tags must be lower-case slugs such as `dark-mode`, which the schema checks
 - An RSS feed at `/rss.xml`, linked from every page's `<head>` and footer
 - A sitemap at `/sitemap-index.xml`
+- Link previews and SEO tags on every page: canonical URL, Open Graph and a Twitter card. Posts use their hero image as the preview when they have one; the 404 page is kept out of search results
 - An About page in plain Markdown (`src/pages/about.md`), as the example of a standalone page
 - A 404 page
 - Post pages at `/posts/<id>/`: title, published and updated dates, tags, a responsive hero image, the post, and links to the newer and older posts

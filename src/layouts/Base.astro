@@ -6,30 +6,23 @@ import "@nikolaiwu/lunarcss";
 import "@nikolaiwu/lunarcss/layout";
 import "../styles/site.css";
 
+import Seo, { type Props as SeoProps } from "../components/Seo.astro";
 import { url } from "../lib/url";
 import { siteConfig } from "../site.config";
 
-interface PageMeta {
-  // The page's own title. Leave it out on the home page to show only the site title.
-  title?: string;
-  description?: string;
+// Astro pages pass the page's title, description and so on as props (see
+// Seo.astro). Markdown pages that use this layout (e.g. about.md) pass their
+// frontmatter instead, which can set a title and description.
+interface Props extends SeoProps {
+  frontmatter?: { title?: string; description?: string };
 }
 
-// Astro pages pass title/description as props. Markdown pages that use this
-// layout (e.g. about.md) pass their frontmatter instead.
-interface Props extends PageMeta {
-  frontmatter?: PageMeta;
+const { frontmatter, ...seo } = Astro.props;
+if (frontmatter) {
+  seo.title = frontmatter.title ?? seo.title;
+  seo.description = frontmatter.description ?? seo.description;
 }
 
-const { frontmatter, ...props } = Astro.props;
-const title = frontmatter?.title ?? props.title;
-const description =
-  frontmatter?.description ?? props.description ?? siteConfig.description;
-
-const documentTitle = title
-  ? `${title} · ${siteConfig.title}`
-  : siteConfig.title;
-const canonical = new URL(Astro.url.pathname, Astro.site);
 const currentPath = Astro.url.pathname;
 ---
 
@@ -38,9 +31,7 @@ const currentPath = Astro.url.pathname;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{documentTitle}</title>
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    <Seo {...seo} />
     <link
       rel="alternate"
       type="application/rss+xml"
