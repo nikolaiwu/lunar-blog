@@ -1,0 +1,12 @@
+/*
+  Site styles, on top of LunarCSS.
+
+  LunarCSS styles every element, so this file stays small. It's unlayered,
+  which means it beats the theme's layers whatever the specificity; never use
+  !important. Every rule says why the theme can't do it, uses var(--lunar-*)
+  tokens only and selects by structure, never by class.
+
+  To make the theme yours, set tokens on :root here, e.g.
+  --lunar-light, --lunar-dark and --lunar-accent. See the LunarCSS User Guide:
+  https://github.com/nikolaiwu/lunarcss/blob/main/USER-GUIDE.md
+*/

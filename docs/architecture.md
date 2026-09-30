@@ -16,6 +16,9 @@ lunar-blog/
 │   │   └── Post.astro        # a single post
 │   ├── components/           # Head/SEO, PostCard, PostGrid, Pagination,
 │   │                         # TagList, FormattedDate, ThemeToggle
+│   ├── lib/
+│   │   ├── url.ts            # url(): base-path-aware internal links
+│   │   └── posts.ts          # published posts, newest first
 │   ├── pages/
 │   │   ├── index.astro       # intro and latest posts
 │   │   ├── posts/[...page].astro  # archive: /posts/, /posts/2/ …
@@ -61,7 +64,9 @@ Post ids come from file names. A post id that's only a number would collide with
 - **`/404.html`**.
 - The sitemap comes from `@astrojs/sitemap`, which needs `site` set.
 
-Every internal link must work under a `base` path (the demo is served from `/lunar-blog/`). Build URLs through one helper that prefixes `import.meta.env.BASE_URL`, and never hard-code a leading `/`. See [deploy.md](deploy.md).
+Every internal link must work under a `base` path (the demo is served from `/lunar-blog/`). Build URLs through `url()` in `src/lib/url.ts`, which prefixes `import.meta.env.BASE_URL`, and never hard-code a leading `/`. See [deploy.md](deploy.md).
+
+In `Base.astro` the site title in `body > header` is a link in a `p`, not a heading, so each page's own title is its only `h1`. The layout stylesheet only needs the `nav` in the header, not a heading.
 
 ## `site.config.ts`
 

@@ -1,0 +1,92 @@
+---
+// Theme first, then its layout layer, then ours. Cascade layers are ordered by
+// first appearance, so this order matters (see docs/lunarcss.md).
+import "@nikolaiwu/lunarcss/fonts";
+import "@nikolaiwu/lunarcss";
+import "@nikolaiwu/lunarcss/layout";
+import "../styles/site.css";
+
+import { url } from "../lib/url";
+import { siteConfig } from "../site.config";
+
+interface PageMeta {
+  // The page's own title. Leave it out on the home page to show only the site title.
+  title?: string;
+  description?: string;
+}
+
+// Astro pages pass title/description as props. Markdown pages that use this
+// layout (e.g. about.md) pass their frontmatter instead.
+interface Props extends PageMeta {
+  frontmatter?: PageMeta;
+}
+
+const { frontmatter, ...props } = Astro.props;
+const title = frontmatter?.title ?? props.title;
+const description =
+  frontmatter?.description ?? props.description ?? siteConfig.description;
+
+const documentTitle = title
+  ? `${title} · ${siteConfig.title}`
+  : siteConfig.title;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang={siteConfig.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{documentTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <header>
+      <p>
+        <strong>
+          <a href={url()}>{siteConfig.title}</a>
+        </strong>
+      </p>
+      <nav aria-label="Main">
+        <ul>
+          {siteConfig.nav.map((link) => {
+            const href = url(link.href);
+            return (
+              <li>
+                <a
+                  href={href}
+                  aria-current={
+                    currentPath.startsWith(href) ? "page" : undefined
+                  }
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <p>
+        <small>
+          &copy; {new Date().getFullYear()} {siteConfig.author}
+        </small>
+      </p>
+      <p>
+        <small>
+          Built with <a href="https://astro.build">Astro</a> and{" "}
+          <a href="https://github.com/nikolaiwu/lunarcss">LunarCSS</a>
+        </small>
+      </p>
+    </footer>
+  </body>
+</html>
