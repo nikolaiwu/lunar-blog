@@ -21,6 +21,7 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 - Post archive at `/posts/`, `/posts/2/` and so on, `postsPerPage` cards per page, with newer and older page links
 - Tag pages: `/tags/` lists every tag with its post count, and `/tags/<tag>/` shows that tag's posts. Tags must be lower-case slugs such as `dark-mode`, which the schema checks
 - An RSS feed at `/rss.xml`, linked from every page's `<head>` and footer
+- A sitemap at `/sitemap-index.xml`
 - An About page in plain Markdown (`src/pages/about.md`), as the example of a standalone page
 - A 404 page
 - Post pages at `/posts/<id>/`: title, published and updated dates, tags, a responsive hero image, the post, and links to the newer and older posts

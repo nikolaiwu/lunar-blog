@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { styleText } from "node:util";
 import { satteri } from "@astrojs/markdown-satteri";
 import mdx from "@astrojs/mdx";
+import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 
 // The demo is served from https://nikolaiwu.github.io/lunar-blog/.
@@ -84,7 +85,9 @@ function localTheme(dir) {
 export default defineConfig({
   site,
   base,
-  integrations: [mdx()],
+  // sitemap() writes sitemap-index.xml for every page, under the base path.
+  // It leaves out the 404 page by itself, and needs `site` above.
+  integrations: [mdx(), sitemap()],
   markdown: {
     processor: satteri({ hastPlugins: [footnotesRule] }),
     shikiConfig: {

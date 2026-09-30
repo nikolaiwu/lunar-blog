@@ -62,7 +62,7 @@ Post ids come from file names: `hello-world.md` and `hello-world/index.md` both 
 - **`/rss.xml`**: `@astrojs/rss`, title, description, date, tags (as categories) and link per post, plus an `atom:link rel="self"`, which feed validators ask for. Linked from `<head>` (`rel="alternate"`) and the footer. Pass `rss()` the blog's home URL as `site`, base path included, since it becomes the channel link: `context.site` alone is just the host. Item links come from `url()`.
 - **`/about/`**: a Markdown page using the base layout.
 - **`/404.html`**.
-- The sitemap comes from `@astrojs/sitemap`, which needs `site` set.
+- **`/sitemap-index.xml`** (and `sitemap-0.xml`): `@astrojs/sitemap`, which needs `site` set. It includes the base path, leaves out the 404 page by itself, and only lists built pages, so drafts never appear. Linked from `<head>` (`rel="sitemap"`, through `url()`). Build only: `pnpm dev` doesn't serve it.
 
 Every internal link must work under a `base` path (the demo is served from `/lunar-blog/`). Build URLs through `url()` in `src/lib/url.ts`, which prefixes `import.meta.env.BASE_URL`, and never hard-code a leading `/`. See [deploy.md](deploy.md).
 
