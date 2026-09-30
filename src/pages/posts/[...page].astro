@@ -1,0 +1,61 @@
+---
+// The post archive: /posts/, then /posts/2/, /posts/3/ … with
+// siteConfig.postsPerPage posts on each page, newest first. The rest
+// parameter ([...page]) is what makes page 1 /posts/ instead of /posts/1/.
+import type { GetStaticPaths } from "astro";
+import PostCard from "../../components/PostCard.astro";
+import Base from "../../layouts/Base.astro";
+import { getPosts } from "../../lib/posts";
+import { url } from "../../lib/url";
+import { siteConfig } from "../../site.config";
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const posts = await getPosts();
+  return paginate(posts, { pageSize: siteConfig.postsPerPage });
+}) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+const { currentPage, lastPage } = page;
+
+// Links built from page numbers with url(), so they follow the base path
+const pageUrl = (n: number) => url(n === 1 ? "posts/" : `posts/${n}/`);
+const title = currentPage === 1 ? "Posts" : `Posts, page ${currentPage}`;
+---
+
+<Base
+  title={title}
+  description={`All posts on ${siteConfig.title}, newest first.`}
+>
+  <h1>Posts</h1>
+
+  {/* Only cards in this wrapper, so it becomes a grid */}
+  <div>
+    {page.data.map((post) => (
+      <PostCard post={post} />
+    ))}
+  </div>
+
+  {lastPage > 1 && (
+    <nav aria-label="Pagination">
+      <ul>
+        {currentPage > 1 && (
+          <li>
+            <a href={pageUrl(currentPage - 1)} rel="prev">
+              Newer posts
+            </a>
+          </li>
+        )}
+        <li>
+          Page {currentPage} of {lastPage}
+        </li>
+        {currentPage < lastPage && (
+          <li>
+            <a href={pageUrl(currentPage + 1)} rel="next">
+              Older posts
+            </a>
+          </li>
+        )}
+      </ul>
+    </nav>
+  )}
+</Base>
