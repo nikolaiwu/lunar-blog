@@ -13,6 +13,7 @@
 - No `class` attributes, no inline `style`, no component `<style>` blocks. Astro's scoped styles are unlayered and would override the theme. If the markup can't express something, it's either a theme gap or a rule in `site.css`.
 - `data-*` and ARIA attributes are fine as hooks (e.g. `aria-current`, `aria-label` on a second `nav`).
 - Semantic elements first: `header`, `nav`, `main`, `article`, `aside`, `footer`, `time`, `figure`/`figcaption`. Keep the heading levels in order on every page.
+- Watch the spaces between text and tags in `.astro` files. Astro drops the whitespace where a line of text ends and the next line starts with a tag or `{expression}`, so `or the` then `<a>` on the next line renders as "or the<a>". End such lines with `{" "}` (Prettier keeps it), or build the text as one string. After editing, check the built HTML.
 
 ## `site.css`
 

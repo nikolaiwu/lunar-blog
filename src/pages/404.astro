@@ -1,0 +1,18 @@
+---
+// Built to 404.html, which static hosts such as GitHub Pages serve for any
+// URL that doesn't exist.
+import Base from "../layouts/Base.astro";
+import { url } from "../lib/url";
+---
+
+<Base title="Page not found" description="There's no page at this address.">
+  <h1>Page not found</h1>
+  <p>
+    There's no page at this address. It may have moved, or the link may be
+    mistyped.
+  </p>
+  <p>
+    Try the <a href={url()}>home page</a> or the{" "}
+    <a href={url("posts/")}>list of all posts</a>.
+  </p>
+</Base>

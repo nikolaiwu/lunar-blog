@@ -20,5 +20,7 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 - Home page: the site intro and the latest posts as a card grid, with a `PostCard` component shared by every list of posts
 - Post archive at `/posts/`, `/posts/2/` and so on, `postsPerPage` cards per page, with newer and older page links
 - Tag pages: `/tags/` lists every tag with its post count, and `/tags/<tag>/` shows that tag's posts. Tags must be lower-case slugs such as `dark-mode`, which the schema checks
+- An About page in plain Markdown (`src/pages/about.md`), as the example of a standalone page
+- A 404 page
 - Post pages at `/posts/<id>/`: title, published and updated dates, tags, a responsive hero image, the post, and links to the newer and older posts
 - Local theme mode: `LUNARCSS_LOCAL=../lunarcss pnpm dev` compiles the theme from a LunarCSS checkout's SCSS source, for working on the theme and the blog together
