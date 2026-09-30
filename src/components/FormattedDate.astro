@@ -1,0 +1,22 @@
+---
+// A date as a <time> element, written out in the site's language:
+// <time datetime="2026-09-30">September 30, 2026</time> for "en".
+//
+// Frontmatter dates are midnight UTC, so format them in UTC too. In the
+// build machine's own time zone, a date could come out a day early.
+import { siteConfig } from "../site.config";
+
+interface Props {
+  date: Date;
+}
+
+const { date } = Astro.props;
+const text = date.toLocaleDateString(siteConfig.lang, {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+});
+---
+
+<time datetime={date.toISOString().slice(0, 10)}>{text}</time>

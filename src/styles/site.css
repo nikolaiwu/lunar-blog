@@ -10,3 +10,24 @@
   --lunar-light, --lunar-dark and --lunar-accent. See the LunarCSS User Guide:
   https://github.com/nikolaiwu/lunarcss/blob/main/USER-GUIDE.md
 */
+
+/*
+  A post is an <article> directly in <main>, and LunarCSS draws every article
+  as a card. That suits the post cards in a grid, not a whole post. This is
+  the reset from the User Guide ("Full-page articles"). Theme gap: see
+  docs/theme-gaps.md ("Full-page article").
+*/
+main > article {
+  padding: 0;
+}
+
+main > article::before,
+main > article::after,
+main > article > footer::before {
+  content: none;
+}
+
+main > article > header {
+  padding-bottom: 0;
+  background: none;
+}

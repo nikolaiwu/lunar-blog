@@ -8,7 +8,7 @@ Statuses: **suspected** (not checked yet) · **confirmed** · **workaround in si
 
 These came from the LunarCSS promotion plan, before any code existed.
 
-- **Full-page article is drawn as a card**: suspected. Any `article` is a card, so `main > article` for a post is boxed. The User Guide documents a reset, which goes in `site.css` for now. The theme could offer this itself (e.g. `main > article` without the card, or a card only inside a grid).
+- **Full-page article is drawn as a card**: workaround in site.css. Any `article` is a card, so `main > article` for a post is boxed. `site.css` has the User Guide's reset ("Full-page articles") until the theme handles it. The theme could offer this itself (e.g. `main > article` without the card, or a card only inside a grid).
 - **Footnotes**: suspected. GFM footnotes produce `sup > a` references, a `section[data-footnotes]` with a heading carrying `sr-only`, and back-reference links (`↩`). Check the reference size, the heading, and the back-links against the link chip style.
 - **Heading anchors**: suspected. Anchor links inside or next to `h2`/`h3` may clash with the heading's slanted-bar mark (`::before`) and the link chip.
 - **Long code blocks**: suspected. Check very long lines (sideways scroll, focus state), very tall blocks, and Shiki's token colours against the theme's `pre` background in both modes.

@@ -1,0 +1,77 @@
+---
+// A single post: title, dates, tags, hero image and content, then links to
+// the neighbouring posts. The post is an <article> directly in <main>; site.css
+// keeps LunarCSS from drawing it as a card (see docs/theme-gaps.md).
+import { Image } from "astro:assets";
+import FormattedDate from "../components/FormattedDate.astro";
+import { url } from "../lib/url";
+import type { Post } from "../lib/posts";
+import Base from "./Base.astro";
+
+interface Props {
+  post: Post;
+  // The next post by date, and the previous one
+  newer?: Post;
+  older?: Post;
+}
+
+const { post, newer, older } = Astro.props;
+const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
+---
+
+<Base title={title} description={description}>
+  <article>
+    <header>
+      <h1>{title}</h1>
+      <p>
+        Published <FormattedDate date={pubDate} />
+        {updatedDate && (
+          <>
+            {" "}
+            · Updated <FormattedDate date={updatedDate} />
+          </>
+        )}
+      </p>
+      {tags.length > 0 && (
+        <p>
+          Tagged{" "}
+          {tags.map((tag, i) => (
+            <>
+              {i > 0 && ", "}
+              <a href={url(`tags/${tag}/`)}>{tag}</a>
+            </>
+          ))}
+        </p>
+      )}
+    </header>
+
+    {heroImage && (
+      <Image
+        src={heroImage}
+        alt={post.data.heroImageAlt ?? ""}
+        widths={[640, 1120, 2240]}
+        sizes="(min-width: 72rem) 70rem, calc(100vw - 2rem)"
+        priority
+      />
+    )}
+
+    <slot />
+  </article>
+
+  {(newer || older) && (
+    <nav aria-label="More posts">
+      <ul>
+        {newer && (
+          <li>
+            Newer: <a href={url(`posts/${newer.id}/`)}>{newer.data.title}</a>
+          </li>
+        )}
+        {older && (
+          <li>
+            Older: <a href={url(`posts/${older.id}/`)}>{older.data.title}</a>
+          </li>
+        )}
+      </ul>
+    </nav>
+  )}
+</Base>
