@@ -17,8 +17,16 @@ const posts = defineCollection({
         pubDate: z.coerce.date(),
         // Shown as "Updated …" when present
         updatedDate: z.coerce.date().optional(),
-        // Lower-case slugs, e.g. [css, astro]
-        tags: z.array(z.string()).default([]),
+        // Lower-case slugs, e.g. [css, dark-mode]. Each tag gets a page at
+        // /tags/<tag>/, so it has to be safe in a URL.
+        tags: z
+          .array(
+            z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, {
+              error:
+                "Tags must be lower-case words joined by hyphens, e.g. dark-mode",
+            }),
+          )
+          .default([]),
         // Drafts show in `pnpm dev` and never in the build (see src/lib/posts.ts)
         draft: z.boolean().default(false),
         // A path relative to the post, e.g. ./cover.jpg. Astro optimizes it.

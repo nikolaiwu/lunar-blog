@@ -38,16 +38,16 @@ Treat this as the target shape, not a fixed contract. If current Astro conventio
 
 One `posts` collection, loaded from `src/content/posts/` with the glob loader. The schema, in Zod through Astro's re-export:
 
-| Field          | Type                       | Notes                                           |
-| -------------- | -------------------------- | ----------------------------------------------- |
-| `title`        | string                     |                                                 |
-| `description`  | string                     | Card text, meta description, RSS summary        |
-| `pubDate`      | date (coerced)             |                                                 |
-| `updatedDate`  | date, optional             | Shown as "Updated …" when present               |
-| `tags`         | string array, default `[]` | Lower-case slugs; display them as written       |
-| `draft`        | boolean, default `false`   | Drafts show in `pnpm dev`, never in the build   |
-| `heroImage`    | `image()`, optional        | Optimized by Astro; alt text in `heroImageAlt`  |
-| `heroImageAlt` | string, optional           | Required when `heroImage` is set (use a refine) |
+| Field          | Type                       | Notes                                                                           |
+| -------------- | -------------------------- | ------------------------------------------------------------------------------- |
+| `title`        | string                     |                                                                                 |
+| `description`  | string                     | Card text, meta description, RSS summary                                        |
+| `pubDate`      | date (coerced)             |                                                                                 |
+| `updatedDate`  | date, optional             | Shown as "Updated …" when present                                               |
+| `tags`         | string array, default `[]` | Lower-case slugs (`dark-mode`), checked by the schema; each gets `/tags/<tag>/` |
+| `draft`        | boolean, default `false`   | Drafts show in `pnpm dev`, never in the build                                   |
+| `heroImage`    | `image()`, optional        | Optimized by Astro; alt text in `heroImageAlt`                                  |
+| `heroImageAlt` | string, optional           | Required when `heroImage` is set (use a refine)                                 |
 
 Put the "published posts, newest first" query in one helper (e.g. `src/lib/posts.ts`) so every page filters drafts the same way.
 

@@ -16,6 +16,20 @@ export async function getPosts(): Promise<Post[]> {
   );
 }
 
+// Every tag used by a published post, alphabetically, with its posts
+// (newest first). The tag pages are built from this.
+export async function getTags(): Promise<{ tag: string; posts: Post[] }[]> {
+  const byTag = new Map<string, Post[]>();
+  for (const post of await getPosts()) {
+    for (const tag of post.data.tags) {
+      byTag.set(tag, [...(byTag.get(tag) ?? []), post]);
+    }
+  }
+  return [...byTag]
+    .map(([tag, posts]) => ({ tag, posts }))
+    .sort((a, b) => a.tag.localeCompare(b.tag));
+}
+
 // A post whose id is only digits (2.md) would get the URL /posts/2/, which is
 // also the second page of the post archive. Stop the build instead of letting
 // one silently replace the other.

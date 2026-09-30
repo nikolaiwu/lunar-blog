@@ -1,0 +1,36 @@
+---
+// One page per tag, at /tags/<tag>/: its posts as cards, newest first.
+// Not paginated.
+import PostCard from "../../components/PostCard.astro";
+import Base from "../../layouts/Base.astro";
+import { getTags } from "../../lib/posts";
+import { url } from "../../lib/url";
+
+export async function getStaticPaths() {
+  const tags = await getTags();
+  return tags.map(({ tag, posts }) => ({
+    params: { tag },
+    props: { posts },
+  }));
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+const count = `${posts.length} ${posts.length === 1 ? "post" : "posts"}`;
+---
+
+<Base title={`Tagged ${tag}`} description={`Posts tagged ${tag}.`}>
+  <h1>Tagged “{tag}”</h1>
+  <p>
+    {count}
+    {" · "}
+    <a href={url("tags/")}>All tags</a>
+  </p>
+
+  {/* Only cards in this wrapper, so it becomes a grid (with two or more) */}
+  <div>
+    {posts.map((post) => (
+      <PostCard post={post} />
+    ))}
+  </div>
+</Base>

@@ -1,0 +1,22 @@
+---
+// Every tag, alphabetically, with how many posts use it.
+import Base from "../../layouts/Base.astro";
+import { getTags } from "../../lib/posts";
+import { url } from "../../lib/url";
+
+const tags = await getTags();
+---
+
+<Base title="Tags" description="Every tag used on this blog, with its posts.">
+  <h1>Tags</h1>
+  <ul>
+    {tags.map(({ tag, posts }) => (
+      <li>
+        <a href={url(`tags/${tag}/`)}>{tag}</a>{" "}
+        <small>
+          {posts.length} {posts.length === 1 ? "post" : "posts"}
+        </small>
+      </li>
+    ))}
+  </ul>
+</Base>
