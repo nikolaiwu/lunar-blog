@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { styleText } from "node:util";
+import mdx from "@astrojs/mdx";
 import { defineConfig } from "astro/config";
 
 // The demo is served from https://nikolaiwu.github.io/lunar-blog/.
@@ -62,5 +63,6 @@ function localTheme(dir) {
 export default defineConfig({
   site,
   base,
+  integrations: [mdx()],
   vite: localTheme(process.env.LUNARCSS_LOCAL),
 });

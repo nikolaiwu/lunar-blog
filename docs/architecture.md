@@ -14,7 +14,7 @@ lunar-blog/
 │   ├── layouts/
 │   │   ├── Base.astro        # <html>, head, page shell (header, main, footer)
 │   │   └── Post.astro        # a single post
-│   ├── components/           # Head/SEO, PostCard, PostGrid, Pagination,
+│   ├── components/           # Figure, Head/SEO, PostCard, PostGrid, Pagination,
 │   │                         # TagList, FormattedDate
 │   ├── lib/
 │   │   ├── url.ts            # url(): base-path-aware internal links
@@ -78,8 +78,9 @@ A typed object: `title`, `description`, `author`, `lang` (for `<html lang>`), `n
 - **Syntax highlighting:** Astro's built-in Shiki at build time, with two themes, a light and a dark one (LunarCSS's showcase uses Catppuccin Latte and Mocha), and `defaultColor: false`. The tokens then carry `--shiki-light` / `--shiki-dark` custom properties instead of inline colours, and one rule in `site.css` picks between them with `light-dark()`, so highlighting follows the system's light or dark setting with no JS. `defaultColor: false` also keeps Shiki from painting a background on `pre`, so the theme's code block look stays. Check the generated HTML after any Astro upgrade.
 - **Footnotes:** remark-rehype puts the "Footnotes" heading in an `h2` with an `sr-only` class. We don't style classes, so either configure the label (Astro exposes `markdown.remarkRehype` options) or accept a visible heading. Decide by how it looks in the theme, and log it in [theme-gaps.md](theme-gaps.md).
 - **Heading anchors:** Astro adds `id`s to headings. If we add visible anchor links (rehype-autolink-headings or similar), configure it to emit no classes and check how the theme's link chip and heading marks look together.
-- **Images** in posts go through Astro's image pipeline (`sharp`). Always provide alt text.
-- **MDX:** `@astrojs/mdx`. The sample MDX post shows a component, but components must follow the no-classes rule too.
+- **Images** in posts go through Astro's image pipeline (`sharp`), as long as they use Markdown's `![alt](./file.png)` syntax. Astro doesn't process a local image inside raw HTML in a `.md` file. Always provide alt text. Leave Astro's global responsive-image setting (`image.layout`) off: it adds an inline `style` to every image.
+- **Captions:** Markdown has no caption syntax, so a captioned image needs MDX and the `Figure` component (`src`, `alt`, `caption` props; it outputs `figure > img + figcaption`). The caption is a prop, because MDX wraps child text on its own line in a `<p>`.
+- **MDX:** `@astrojs/mdx`. The sample MDX post shows `Figure`; components must follow the no-classes rule too. The build prints a `MODULE_LEVEL_DIRECTIVE` warning (`"use astro:head-inject"`) for every MDX file. It's a harmless, open Astro bug ([withastro/astro#18087](https://github.com/withastro/astro/issues/18087)), and the only known exception to "no build warnings". Recheck it after Astro upgrades.
 
 ## Light and dark
 

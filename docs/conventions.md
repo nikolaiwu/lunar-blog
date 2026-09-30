@@ -22,7 +22,7 @@
 
 ## Dependencies
 
-Keep them few: `astro`, `@nikolaiwu/lunarcss`, `@astrojs/mdx`, `@astrojs/rss`, `@astrojs/sitemap`, and the dev tooling (including `sass`, for local theme mode; see [lunarcss.md](lunarcss.md)). Every extra dependency is something template users inherit and have to maintain, so ask before adding one.
+Keep them few: `astro`, `@nikolaiwu/lunarcss`, `@astrojs/mdx`, `@astrojs/rss`, `@astrojs/sitemap`, `sharp` (Astro's image service; under pnpm, Astro can't see the copy it lists as optional, so it's a direct dependency), and the dev tooling (including `sass`, for local theme mode; see [lunarcss.md](lunarcss.md)). Every extra dependency is something template users inherit and have to maintain, so ask before adding one.
 
 ## Accessibility
 

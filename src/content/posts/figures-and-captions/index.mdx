@@ -1,0 +1,74 @@
+---
+title: Figures and captions in MDX
+description: Markdown has no syntax for an image caption. An MDX post can use a small classless component instead, and LunarCSS styles the figure it outputs.
+pubDate: 2026-09-26
+tags: [mdx, astro, markdown]
+---
+
+import Figure from "../../../components/Figure.astro";
+import socialCard from "./social-card.png";
+
+Markdown gives you `![alt](src)` for images and nothing for captions. In a plain `.md` post you could write the `<figure>` by hand in raw HTML, but Astro doesn't optimize a local image inside raw HTML, so you'd lose resizing and modern formats.
+
+MDX fixes that. An `.mdx` post is Markdown that can also import and use components, and this blog has one for exactly this job.
+
+## The component
+
+`Figure` takes an imported image, its alt text and an optional caption. It outputs nothing but a `figure`, an `img` and a `figcaption`:
+
+```astro
+---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+---
+
+<figure>
+  <Image src={src} alt={alt} />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+```
+
+There are no classes and no styles. LunarCSS already styles a `figure` with a border, and sets its `figcaption` centred in a striped rule.
+
+## Using it
+
+At the top of the post, below the frontmatter, import the component and the image:
+
+```mdx
+import Figure from "../../../components/Figure.astro";
+import socialCard from "./social-card.png";
+```
+
+Then use it anywhere in the post:
+
+```mdx
+<Figure src={socialCard} alt="…" caption="The LunarCSS social card." />
+```
+
+Here's the result:
+
+<Figure
+  src={socialCard}
+  alt="The LunarCSS social card in the dark theme: the name and tagline beside a text field with a Launch button, a switch, a striped progress bar and a table header."
+  caption="The LunarCSS social card, drawn from the theme's real component geometry."
+/>
+
+Astro resized the image and converted it to a modern format at build time, and added its width and height, so the page doesn't jump when it loads.
+
+## Why the caption is a prop
+
+It would be neater to write the caption between the tags, like HTML. But when MDX finds text on its own line inside a component, it wraps it in a paragraph, and a `p` inside a `figcaption` is both odd HTML and odd-looking: LunarCSS draws a bracket beside every paragraph. A prop keeps the caption plain text.
+
+## When to use it
+
+Use `Figure` whenever an image needs a caption. For an image without one, the Markdown syntax is shorter and gets the same optimization, in `.md` and `.mdx` posts alike.
+
+Only write a post in MDX when it needs a component. MDX parses a post as JSX, so a stray `<` or `{` in the text can break the build, where plain Markdown would have printed it.

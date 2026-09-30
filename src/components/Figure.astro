@@ -1,0 +1,30 @@
+---
+// An image with a caption, for MDX posts. Markdown has no caption syntax, and
+// Astro doesn't optimize a local image inside raw HTML, so an MDX post imports
+// the image and uses this instead:
+//
+//   import Figure from "../../../components/Figure.astro";
+//   import chart from "./chart.png";
+//
+//   <Figure src={chart} alt="What the image shows" caption="The caption." />
+//
+// The caption is a prop, not child content: MDX wraps child text on its own
+// line in a <p>, which LunarCSS would draw as a paragraph inside the caption.
+// Leave it out for a plain figure. Only plain elements here: LunarCSS styles
+// figure and figcaption as they are.
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  caption?: string;
+}
+
+const { src, alt, caption } = Astro.props;
+---
+
+<figure>
+  <Image src={src} alt={alt} />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
