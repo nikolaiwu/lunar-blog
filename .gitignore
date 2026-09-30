@@ -21,3 +21,6 @@ Thumbs.db
 
 # Personal local notes (e.g. PUBLISHING.local.md)
 *.local.md
+
+# Personal Claude Code settings
+.claude/settings.local.json
