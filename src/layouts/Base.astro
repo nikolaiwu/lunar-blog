@@ -41,6 +41,12 @@ const currentPath = Astro.url.pathname;
     <title>{documentTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={siteConfig.title}
+      href={new URL(url("rss.xml"), Astro.site)}
+    />
     <meta name="generator" content={Astro.generator} />
   </head>
   <body>
@@ -85,6 +91,11 @@ const currentPath = Astro.url.pathname;
         <small>
           Built with <a href="https://astro.build">Astro</a> and{" "}
           <a href="https://github.com/nikolaiwu/lunarcss">LunarCSS</a>
+        </small>
+      </p>
+      <p>
+        <small>
+          <a href={url("rss.xml")}>RSS feed</a>
         </small>
       </p>
     </footer>

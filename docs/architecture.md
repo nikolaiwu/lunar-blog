@@ -59,7 +59,7 @@ Post ids come from file names: `hello-world.md` and `hello-world/index.md` both 
 - **`/posts/`**, **`/posts/2/`**…: the paginated archive (`paginate()`, `postsPerPage` from config), with previous/next links in a `nav`.
 - **`/posts/<id>/`**: the post, with previous/next links to its neighbours by date.
 - **`/tags/`** and **`/tags/<tag>/`**: tag pages, not paginated in v1.
-- **`/rss.xml`**: `@astrojs/rss`, title, description, date and link per post. Link it from `<head>` (`rel="alternate"`) and the footer.
+- **`/rss.xml`**: `@astrojs/rss`, title, description, date, tags (as categories) and link per post, plus an `atom:link rel="self"`, which feed validators ask for. Linked from `<head>` (`rel="alternate"`) and the footer. Pass `rss()` the blog's home URL as `site`, base path included, since it becomes the channel link: `context.site` alone is just the host. Item links come from `url()`.
 - **`/about/`**: a Markdown page using the base layout.
 - **`/404.html`**.
 - The sitemap comes from `@astrojs/sitemap`, which needs `site` set.
