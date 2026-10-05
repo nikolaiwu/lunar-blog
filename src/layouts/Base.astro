@@ -6,6 +6,7 @@ import "@nikolaiwu/lunarcss";
 import "@nikolaiwu/lunarcss/layout";
 import "../styles/site.css";
 
+import Logo from "../assets/logo.svg";
 import Seo, { type Props as SeoProps } from "../components/Seo.astro";
 import { url } from "../lib/url";
 import { siteConfig } from "../site.config";
@@ -45,11 +46,9 @@ const currentPath = Astro.url.pathname;
   </head>
   <body>
     <header>
-      <p>
-        <strong>
-          <a href={url()}>{siteConfig.title}</a>
-        </strong>
-      </p>
+      <a href={url()}>
+        <Logo aria-hidden="true" /> <strong>{siteConfig.title}</strong>
+      </a>
       <nav aria-label="Main">
         <ul>
           {siteConfig.nav.map((link) => {

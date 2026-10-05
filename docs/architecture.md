@@ -11,6 +11,7 @@ lunar-blog/
 │   ├── site.config.ts        # the one file users edit first: title, author, nav…
 │   ├── content.config.ts     # the posts collection and its schema
 │   ├── content/posts/        # sample posts (.md and .mdx), co-located images
+│   ├── assets/logo.svg       # the logo in the header, inlined by Astro
 │   ├── layouts/
 │   │   ├── Base.astro        # <html>, head, page shell (header, main, footer)
 │   │   └── Post.astro        # a single post
@@ -70,7 +71,20 @@ Post ids come from file names: `hello-world.md` and `hello-world/index.md` both 
 
 Every internal link must work under a `base` path (the demo is served from `/lunar-blog/`). Build URLs through `url()` in `src/lib/url.ts`, which prefixes `import.meta.env.BASE_URL`, and never hard-code a leading `/`. See [deploy.md](deploy.md).
 
-In `Base.astro` the site title in `body > header` is a link in a `p`, not a heading, so each page's own title is its only `h1`. The layout stylesheet only needs the `nav` in the header, not a heading.
+In `Base.astro` the site title is a link straight in `body > header`, not a heading, so each page's own title is its only `h1`. The layout stylesheet only needs the `nav` in the header, not a heading.
+
+### Logo
+
+The site title link starts with the logo, `src/assets/logo.svg`: the favicon's accent box, widened, with its lines of writing. `Base.astro` imports it as an Astro SVG component, so it's inlined as an `<svg>`, with `aria-hidden="true"` since the title text right after it names the link. To use your own logo, replace the file; to drop it, delete the file and its import and `<Logo />` in `Base.astro`.
+
+There's no CSS to size it, so the markup and the file itself have to be right:
+
+- **The link is a direct child of the header.** The header is a flex row, so the link is laid out as a block, and its tint and accent underline cover the whole box, logo included. Don't wrap it in a `p` or `strong`: the link would be inline again, and its tint and underline would only cover the font's text box (about 1.28em in Space Grotesk), so a taller logo would stick out and the underline would cross it. The bold goes on the title text inside the link instead.
+- **Inline `svg`, not `<img>`.** LunarCSS makes every `img` a block with a bottom margin, which would put the title under the logo. An inline `svg` sits in the line next to the title (the theme gives it `display: inline-block` and `vertical-align: middle`, so the title lines up with its middle) and gets no margin.
+- **Sized in `em`.** It's `2em` tall, so it stays in proportion to the title at any font size. Set `width` in the file: the theme's `svg { height: auto }` overrides the `height` attribute, so the height comes from `width` and the `viewBox`'s proportions.
+- **Its own colours.** The fills are fixed hex values (the accent and the dark page colour, as in `favicon.svg`), the same in light and dark mode. Presentation attributes can't read `var(--lunar-*)`. If you change `--lunar-accent`, change the logo's fill to match, or use `fill="currentColor"` for a logo that follows the text colour. On hover, the link's accent sweep fills in behind the logo, so the box merges into it and the lines stay.
+- **No comments in the file.** Astro inlines the SVG as it is, so a comment would ship in every page.
+- **One rule in `site.css`.** LunarCSS pads every link on both sides; `body > header > a:has(> svg:first-child)` drops the padding before the logo, so it sits flush with the start of the link's tint and lines up with the page content. The padding after the title stays, and if the logo is removed, the selector no longer matches and the link is padded as usual.
 
 ## `site.config.ts`
 

@@ -33,6 +33,17 @@ main > article > header {
 }
 
 /*
+  The site title link starts with the logo (src/assets/logo.svg). LunarCSS
+  pads every link on both sides so its tint doesn't end right at the text;
+  the logo is a box of its own, so it sits flush with the link's start and
+  lines up with the page content. The end keeps its padding, after the title
+  text. Without a logo, the link keeps its padding on both sides.
+*/
+body > header > a:has(> svg:first-child) {
+  padding-inline-start: 0;
+}
+
+/*
   Code highlighting. Shiki runs at build time and gives each token both of
   its colours as custom properties (astro.config.mjs: defaultColor: false),
   so this picks one with light-dark(), following the page's mode. The theme

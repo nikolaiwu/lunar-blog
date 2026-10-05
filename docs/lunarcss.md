@@ -28,13 +28,14 @@ import "../styles/site.css"; // ours, unlayered
 
 LunarCSS styles elements, and the layout stylesheet places them by structure. Write markup that matches these patterns, not CSS that fights them.
 
-- **Page shell:** `body > header` holding the site title and a `nav` (they share a row and wrap on small screens), then `main`, an optional `aside`, and `body > footer`. `main` and `aside` as siblings become a sidebar layout above 60rem; source order picks the side.
+- **Page shell:** `body > header` holding the site title (one link with the logo and the title, straight in the header) and a `nav` (they share a row and wrap on small screens), then `main`, an optional `aside`, and `body > footer`. `main` and `aside` as siblings become a sidebar layout above 60rem; source order picks the side.
 - **Navigation:** `nav > ul > li > a` makes a horizontal row with no bullet ticks. Mark the current page with `aria-current="page"`, not a class.
 - **Cards:** every `article` is a card (cut-corner border, with optional `header` and `footer`). A post preview is `article > header > h2/h3 > a`, then a `p`, then a `footer` with the date and tags.
 - **Card grid:** a parent whose direct children are **all** `article`s (at least two) becomes a responsive grid. Any other child, such as a heading or a "more posts" link, turns the grid off, so put those outside the wrapper. A single post doesn't get a grid, which is fine.
 - **Full-page post:** the post itself is semantically an `article`, but a whole post drawn as a card looks wrong. LunarCSS's User Guide gives a reset for `main > article` ("Full-page articles"). Put it in `site.css`, and log it in [theme-gaps.md](theme-gaps.md) as a possible theme feature.
 - **Dates:** always `<time datetime="…">`.
 - **Wide tables:** wrap a table in a `div` (as its only child) and the wrapper scrolls sideways. Markdown tables aren't wrapped, so check a wide one on a phone.
+- **Images in a line of text:** the theme makes `img` a block with a bottom margin, so an icon or logo that sits next to text has to be an inline `svg` (Astro's SVG components inline the file), sized in `em`. Inside an inline link, keep it under about 1em tall, or the link's tint and underline won't cover it. See the logo in [architecture.md](architecture.md).
 - **Code blocks:** `pre` scrolls sideways and gets focus styling on its own. Shiki's `tabindex="0"` on `pre` is fine.
 
 The theme draws with `::before` and `::after` on several elements (cards, `h1`–`h3`, `ul > li`, `dt`, `blockquote`, `code`, `kbd`, `summary`, `q`, `legend`, `figcaption`, and `a[target="_blank"]`). Don't put content in those pseudo-elements. The full table is in the User Guide under "Pseudo-elements the theme uses".
