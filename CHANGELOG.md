@@ -16,6 +16,7 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 - Eight sample posts about building LunarCSS, plus a draft, including an "every Markdown element" reference post and an MDX post
 - MDX support, and a classless `Figure` component for images with captions
 - A horizontal rule between a post and its footnotes
+- Wide tables in posts scroll sideways on their own, instead of making the whole page scroll on small screens: each Markdown table is wrapped in a `div`, which LunarCSS scrolls
 - Syntax highlighting at build time with Catppuccin Latte and Mocha, following the system's light or dark mode, with no JavaScript
 - Home page: the site intro and the latest posts as a card grid, with a `PostCard` component shared by every list of posts
 - Post archive at `/posts/`, `/posts/2/` and so on, `postsPerPage` cards per page, with newer and older page links

@@ -35,6 +35,31 @@ const footnotesRule = {
   },
 };
 
+// Wraps each table in a <div>, so a table too wide for the screen scrolls
+// sideways inside it instead of making the whole page scroll. LunarCSS scrolls
+// any element whose only child is a table (or a figure holding one), and
+// Markdown has no syntax for a wrapper. A table that already has one is left
+// as it is.
+const tableScroll = {
+  name: "table-scroll",
+  element: {
+    filter: ["table"],
+    visit(node, ctx) {
+      const parent = ctx.parent(node);
+      if (parent?.type === "element") {
+        const elements = parent.children.filter((c) => c.type === "element");
+        if (parent.tagName === "figure" || elements.length === 1) return;
+      }
+      ctx.wrapNode(node, {
+        type: "element",
+        tagName: "div",
+        properties: {},
+        children: [],
+      });
+    },
+  },
+};
+
 // Local theme mode, for working on LunarCSS itself:
 //
 //   LUNARCSS_LOCAL=../lunarcss pnpm dev
@@ -89,7 +114,7 @@ export default defineConfig({
   // It leaves out the 404 page by itself, and needs `site` above.
   integrations: [mdx(), sitemap()],
   markdown: {
-    processor: satteri({ hastPlugins: [footnotesRule] }),
+    processor: satteri({ hastPlugins: [footnotesRule, tableScroll] }),
     shikiConfig: {
       // Code is highlighted at build time, with no JS in the browser. Each
       // token gets both themes' colours as --shiki-light / --shiki-dark, and

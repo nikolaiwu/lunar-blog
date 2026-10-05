@@ -34,7 +34,7 @@ LunarCSS styles elements, and the layout stylesheet places them by structure. Wr
 - **Card grid:** a parent whose direct children are **all** `article`s (at least two) becomes a responsive grid. Any other child, such as a heading or a "more posts" link, turns the grid off, so put those outside the wrapper. A single post doesn't get a grid, which is fine.
 - **Full-page post:** the post itself is semantically an `article`, but a whole post drawn as a card looks wrong. LunarCSS's User Guide gives a reset for `main > article` ("Full-page articles"). Put it in `site.css`, and log it in [theme-gaps.md](theme-gaps.md) as a possible theme feature.
 - **Dates:** always `<time datetime="…">`.
-- **Wide tables:** wrap a table in a `div` (as its only child) and the wrapper scrolls sideways. Markdown tables aren't wrapped, so check a wide one on a phone.
+- **Wide tables:** wrap a table in a `div` (as its only child) and the wrapper scrolls sideways. Markdown tables are wrapped for you by the `tableScroll` plugin (see [architecture.md](architecture.md), "Markdown pipeline"); in a page or component, write the `div` yourself.
 - **Images in a line of text:** the theme makes `img` a block with a bottom margin, so an icon or logo that sits next to text has to be an inline `svg` (Astro's SVG components inline the file), sized in `em`. Inside an inline link, keep it under about 1em tall, or the link's tint and underline won't cover it. See the logo in [architecture.md](architecture.md).
 - **Code blocks:** `pre` scrolls sideways and gets focus styling on its own. Shiki's `tabindex="0"` on `pre` is fine.
 
