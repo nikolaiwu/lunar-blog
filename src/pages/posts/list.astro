@@ -1,0 +1,31 @@
+---
+// The archive as a list: every post on one page, newest first, as its title
+// and date. The cards view is /posts/ ([...page].astro). This static route
+// wins over the dynamic ones, so no post can have the id "list" (posts.ts
+// checks).
+import FormattedDate from "../../components/FormattedDate.astro";
+import PostsHeader from "../../components/PostsHeader.astro";
+import Base from "../../layouts/Base.astro";
+import { getPosts } from "../../lib/posts";
+import { url } from "../../lib/url";
+import { siteConfig } from "../../site.config";
+
+const posts = await getPosts();
+---
+
+<Base
+  title="All posts"
+  description={`Every post on ${siteConfig.title}, newest first.`}
+>
+  <PostsHeader view="list" />
+
+  <ol>
+    {posts.map((post) => (
+      <li>
+        <small>{post.data.draft && "DRAFT / "}</small>
+        <a href={url(`posts/${post.id}/`)}>{post.data.title}</a>{" "}
+        <FormattedDate date={post.data.pubDate} />
+      </li>
+    ))}
+  </ol>
+</Base>

@@ -20,6 +20,7 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 - Syntax highlighting at build time with Catppuccin Latte and Mocha, following the system's light or dark mode, with no JavaScript
 - Home page: the site intro and the latest posts as a card grid, with a `PostCard` component shared by every list of posts
 - Post archive at `/posts/`, `/posts/2/` and so on, `postsPerPage` cards per page, with newer and older page links
+- A list view of the archive at `/posts/list/`: every post on one page, by title and date. Icon links next to the Posts heading switch between the cards and the list, with no JavaScript
 - Tag pages: `/tags/` lists every tag with its post count, and `/tags/<tag>/` shows that tag's posts. Tags must be lower-case slugs such as `dark-mode`, which the schema checks
 - An RSS feed at `/rss.xml`, linked from every page's `<head>` and footer
 - A sitemap at `/sitemap-index.xml`, and a `robots.txt` that points to it

@@ -2,8 +2,10 @@
 // The post archive: /posts/, then /posts/2/, /posts/3/ … with
 // siteConfig.postsPerPage posts on each page, newest first. The rest
 // parameter ([...page]) is what makes page 1 /posts/ instead of /posts/1/.
+// The list view of the same posts is /posts/list/ (list.astro).
 import type { GetStaticPaths } from "astro";
 import PostCard from "../../components/PostCard.astro";
+import PostsHeader from "../../components/PostsHeader.astro";
 import Base from "../../layouts/Base.astro";
 import { getPosts } from "../../lib/posts";
 import { url } from "../../lib/url";
@@ -26,7 +28,7 @@ const title = currentPage === 1 ? "Posts" : `Posts, page ${currentPage}`;
   title={title}
   description={`All posts on ${siteConfig.title}, newest first.`}
 >
-  <h1>Posts</h1>
+  <PostsHeader view="cards" />
 
   {/* Only cards in this wrapper, so it becomes a grid */}
   <div>

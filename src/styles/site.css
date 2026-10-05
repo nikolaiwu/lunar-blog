@@ -44,6 +44,37 @@ body > header > a:has(> svg:first-child) {
 }
 
 /*
+  The archive's heading and its view links (cards and list, in
+  PostsHeader.astro) share a row, centred on each other. The layout
+  stylesheet only puts a title and a nav on one row in body > header. The
+  h1's bottom margin would pull the centre line up, so the header takes it
+  over (the theme's h1 margin, --lunar-space-6).
+*/
+main > header:has(> h1 + nav) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: var(--lunar-space-6);
+  margin-bottom: var(--lunar-space-6);
+}
+
+main > header:has(> h1 + nav) > h1 {
+  margin-bottom: 0;
+}
+
+/*
+  Each view link is an icon and a label: a flex row centres them on each
+  other, with a gap between. The link's tint and underline then wrap the
+  whole box.
+*/
+main > header:has(> h1 + nav) a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lunar-space-2);
+}
+
+/*
   Code highlighting. Shiki runs at build time and gives each token both of
   its colours as custom properties (astro.config.mjs: defaultColor: false),
   so this picks one with light-dark(), following the page's mode. The theme

@@ -1,0 +1,51 @@
+---
+// The archive's heading, with links to its two views: cards (/posts/, paged)
+// and a list of every post (/posts/list/). They're links to two pages, not a
+// switch, so there's no JS; the current view is marked with aria-current,
+// which LunarCSS draws as the link's hover state. Rules in site.css put the
+// links on the heading's row.
+//
+// Each link is an icon and a label. The icons are inline SVGs in
+// currentColor, hidden from screen readers, since the label names the link.
+// site.css centres them with the label.
+import CardsIcon from "../assets/icons/cards.svg";
+import ListIcon from "../assets/icons/list.svg";
+import { url } from "../lib/url";
+
+interface Props {
+  view: "cards" | "list";
+}
+
+const { view } = Astro.props;
+const cardsHref = url("posts/");
+const listHref = url("posts/list/");
+
+// "page" on the view's own page; "true" on /posts/2/ and later, which are the
+// cards view but not the page the link goes to
+const cardsCurrent =
+  view === "cards"
+    ? Astro.url.pathname === cardsHref
+      ? "page"
+      : "true"
+    : undefined;
+---
+
+<header>
+  <h1>Posts</h1>
+  <nav aria-label="View">
+    <ul>
+      <li>
+        <a href={cardsHref} aria-current={cardsCurrent}>
+          <CardsIcon aria-hidden="true" />
+          Card
+        </a>
+      </li>
+      <li>
+        <a href={listHref} aria-current={view === "list" ? "page" : undefined}>
+          <ListIcon aria-hidden="true" />
+          List
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>

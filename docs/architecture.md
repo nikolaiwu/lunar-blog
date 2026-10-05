@@ -12,18 +12,20 @@ lunar-blog/
 │   ├── content.config.ts     # the posts collection and its schema
 │   ├── content/posts/        # sample posts (.md and .mdx), co-located images
 │   ├── assets/               # logo.svg (the header logo, inlined by Astro);
-│   │                         # moonrise.svg (an image two sample posts share)
+│   │                         # moonrise.svg (an image two sample posts share);
+│   │                         # icons/ (the archive's cards and list icons)
 │   ├── layouts/
 │   │   ├── Base.astro        # <html>, head, page shell (header, main, footer)
 │   │   └── Post.astro        # a single post
-│   ├── components/           # Figure, FormattedDate, PostCard, Seo
+│   ├── components/           # Figure, FormattedDate, PostCard, PostsHeader, Seo
 │   │                         # (grids, pagination and tag links are inline)
 │   ├── lib/
 │   │   ├── url.ts            # url(): base-path-aware internal links
 │   │   └── posts.ts          # published posts, newest first
 │   ├── pages/
 │   │   ├── index.astro       # intro and latest posts
-│   │   ├── posts/[...page].astro  # archive: /posts/, /posts/2/ …
+│   │   ├── posts/[...page].astro  # archive as cards: /posts/, /posts/2/ …
+│   │   ├── posts/list.astro  # archive as a list: /posts/list/
 │   │   ├── posts/[id].astro  # a post: /posts/<id>/
 │   │   ├── tags/index.astro  # all tags with post counts
 │   │   ├── tags/[tag].astro  # posts with that tag
@@ -57,12 +59,13 @@ One `posts` collection, loaded from `src/content/posts/` with the glob loader. T
 
 Put the "published posts, newest first" query in one helper (e.g. `src/lib/posts.ts`) so every page filters drafts the same way.
 
-Post ids come from file names: `hello-world.md` and `hello-world/index.md` both give `hello-world`. Use the folder form when a post has its own images. A post id that's only a number would collide with an archive page (`/posts/2/`), so `getPosts()` in `src/lib/posts.ts` stops the build with an error naming the file. The check lives there, not in the schema, because the schema never sees the id and Astro's default id function isn't exported.
+Post ids come from file names: `hello-world.md` and `hello-world/index.md` both give `hello-world`. Use the folder form when a post has its own images. A post id that's only a number would collide with an archive page (`/posts/2/`), and the id `list` with the list view (`/posts/list/`), so `getPosts()` in `src/lib/posts.ts` stops the build with an error naming the file. The check lives there, not in the schema, because the schema never sees the id and Astro's default id function isn't exported.
 
 ## Routes
 
 - **`/`**: a short intro (from `site.config.ts`) and the latest `homePostCount` posts as a card grid, then a link to the archive.
-- **`/posts/`**, **`/posts/2/`**…: the paginated archive (`paginate()`, `postsPerPage` from config), with previous/next links in a `nav`.
+- **`/posts/`**, **`/posts/2/`**…: the paginated archive as cards (`paginate()`, `postsPerPage` from config), with previous/next links in a `nav`.
+- **`/posts/list/`**: the archive as a list, every post on one page as its title and date in a `ul`. Both archive views start with `PostsHeader`: the `h1` and a `nav` of two links, Card and List, each an icon and a label. They're links to two pages, not a switch, so there's no JS and the choice isn't remembered. The current view has `aria-current` (`page` on its own page, `true` on `/posts/2/` and later), which LunarCSS draws as the link's hover state. The icons are `currentColor` SVGs, hidden from screen readers since the label names the link. Rules in `site.css` put the links on the heading's row, centred on it (the header takes over the `h1`'s bottom margin, which would pull the centre line up), and make each link an `inline-flex` row that centres the icon on the label, with a gap.
 - **`/posts/<id>/`**: the post, with previous/next links to its neighbours by date.
 - **`/tags/`** and **`/tags/<tag>/`**: tag pages, not paginated in v1.
 - **`/rss.xml`**: `@astrojs/rss`, title, description, date, tags (as categories) and link per post, plus an `atom:link rel="self"`, which feed validators ask for. Linked from `<head>` (`rel="alternate"`) and the footer. Pass `rss()` the blog's home URL as `site`, base path included, since it becomes the channel link: `context.site` alone is just the host. Item links come from `url()`.

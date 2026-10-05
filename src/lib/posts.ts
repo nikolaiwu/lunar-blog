@@ -31,9 +31,16 @@ export async function getTags(): Promise<{ tag: string; posts: Post[] }[]> {
 }
 
 // A post whose id is only digits (2.md) would get the URL /posts/2/, which is
-// also the second page of the post archive. Stop the build instead of letting
+// also the second page of the post archive, and list.md would get
+// /posts/list/, the archive's list view. Stop the build instead of letting
 // one silently replace the other.
 function checkId(post: Post): void {
+  if (post.id === "list") {
+    throw new Error(
+      `The post ${post.filePath ?? post.id} has the id "list". ` +
+        `Its URL, /posts/list/, is the list view of the archive. Rename the file.`,
+    );
+  }
   if (/^\d+$/.test(post.id)) {
     throw new Error(
       `The post ${post.filePath ?? post.id} has the id "${post.id}", which is only digits. ` +
