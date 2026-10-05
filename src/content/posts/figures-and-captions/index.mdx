@@ -6,7 +6,7 @@ tags: [mdx, astro, markdown]
 ---
 
 import Figure from "../../../components/Figure.astro";
-import socialCard from "./social-card.png";
+import moonrise from "../../../assets/moonrise.svg";
 
 Markdown gives you `![alt](src)` for images and nothing for captions. In a plain `.md` post you could write the `<figure>` by hand in raw HTML, but Astro doesn't optimize a local image inside raw HTML, so you'd lose resizing and modern formats.
 
@@ -44,24 +44,24 @@ At the top of the post, below the frontmatter, import the component and the imag
 
 ```mdx
 import Figure from "../../../components/Figure.astro";
-import socialCard from "./social-card.png";
+import moonrise from "../../../assets/moonrise.svg";
 ```
 
 Then use it anywhere in the post:
 
 ```mdx
-<Figure src={socialCard} alt="…" caption="The LunarCSS social card." />
+<Figure src={moonrise} alt="…" caption="Moonrise, drawn as a small SVG." />
 ```
 
 Here's the result:
 
 <Figure
-  src={socialCard}
-  alt="The LunarCSS social card in the dark theme: the name and tagline beside a text field with a Launch button, a switch, a striped progress bar and a table header."
-  caption="The LunarCSS social card, drawn from the theme's real component geometry."
+  src={moonrise}
+  alt="A grey moon over a dark, rocky horizon"
+  caption="Moonrise, drawn as a small SVG."
 />
 
-Astro resized the image and converted it to a modern format at build time, and added its width and height, so the page doesn't jump when it loads.
+Astro added the image's width and height at build time, so the page doesn't jump when it loads. This one is an SVG, so it's served as-is: it's sharp at any size already. A PNG or JPEG would also be resized and converted to a modern format.
 
 ## Why the caption is a prop
 

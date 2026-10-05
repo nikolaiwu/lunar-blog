@@ -11,7 +11,8 @@ lunar-blog/
 │   ├── site.config.ts        # the one file users edit first: title, author, nav…
 │   ├── content.config.ts     # the posts collection and its schema
 │   ├── content/posts/        # sample posts (.md and .mdx), co-located images
-│   ├── assets/logo.svg       # the logo in the header, inlined by Astro
+│   ├── assets/               # logo.svg (the header logo, inlined by Astro);
+│   │                         # moonrise.svg (an image two sample posts share)
 │   ├── layouts/
 │   │   ├── Base.astro        # <html>, head, page shell (header, main, footer)
 │   │   └── Post.astro        # a single post

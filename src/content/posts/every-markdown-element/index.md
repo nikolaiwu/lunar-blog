@@ -175,7 +175,7 @@ A wide table, with more columns than a phone screen can hold:
 
 Markdown images are optimized by Astro at build time. This one is an SVG, so it's copied as-is:
 
-![A grey moon over a dark, rocky horizon](./moonrise.svg)
+![A grey moon over a dark, rocky horizon](../../../assets/moonrise.svg)
 
 Markdown has no syntax for captions, and Astro doesn't process a local image inside raw HTML, so captioned figures live in MDX. See [Figures and captions in MDX](../figures-and-captions/).
 
