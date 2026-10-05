@@ -76,7 +76,7 @@ A definition list, in raw HTML. LunarCSS sets it out like a spec sheet, with a d
 
 > The theme styles elements but never places them; page structure belongs in the optional layout stylesheet.
 >
-> — <cite>LunarCSS contributor notes</cite>
+> <cite>LunarCSS contributor notes</cite>
 
 A quote can hold more than one paragraph, and other quotes:
 
@@ -110,27 +110,16 @@ HTML, a card:
 </article>
 ```
 
-JavaScript, the copy buttons on the LunarCSS showcase:
+JavaScript, a trip planner for that warp drive:
 
 ```js
-for (const button of document.querySelectorAll("[data-copy]")) {
-  const field = document.getElementById(button.dataset.copy);
-  const label = button.textContent;
+const cruiseSpeed = 1.8; // light years per day
 
-  button.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(field.value);
-      button.textContent = "Copied";
-    } catch {
-      field.select();
-      button.textContent = "Selected";
-    }
-
-    setTimeout(() => {
-      button.textContent = label;
-    }, 1500);
-  });
+function travelDays(distance) {
+  return Math.ceil(distance / cruiseSpeed);
 }
+
+console.log(`Proxima Centauri: ${travelDays(4.24)} days`);
 ```
 
 A shell command:
@@ -139,18 +128,16 @@ A shell command:
 pnpm add @nikolaiwu/lunarcss
 ```
 
-JSON, the start of the package's `exports` map:
+JSON, the drive's spec sheet:
 
 ```json
 {
-  ".": {
-    "types": "./types/stylesheet.d.ts",
-    "default": "./dist/lunarcss.min.css"
-  },
-  "./fonts": {
-    "types": "./types/stylesheet.d.ts",
-    "default": "./dist/lunarcss-fonts.min.css"
-  }
+  "model": "C-137",
+  "cruiseSpeed": 1.8,
+  "unit": "light years per day",
+  "inStock": true,
+  "warranty": null,
+  "destinations": ["Proxima Centauri", "Barnard's Star"]
 }
 ```
 
@@ -158,79 +145,6 @@ The published stylesheet is minified into one very long line; here's how it star
 
 ```css
 @layer lunarcss{:root{color-scheme:light dark;--color-warm-white: #ece8e3;--color-meteorite-black: #2a2c2f;--color-solar-orange: #ff5623;--lunar-light: var(--color-warm-white);--lunar-dark: var(--color-meteorite-black);--lunar-bg: light-dark(var(--lunar-light), var(--lunar-dark));--lunar-fg: light-dark(var(--lunar-dark), var(--lunar-light));--lunar-accent: var(--color-solar-orange);--lunar-muted-mix: 50%;
-```
-
-And a tall one, the theme's entry point (with its section dividers trimmed), which sets the order of the whole cascade:
-
-```scss
-// =============================================================================
-// LUNARCSS - Main Entry Point
-// =============================================================================
-// This is the production entry point. It loads all theme styles in the
-// correct order. The output is a single CSS file.
-//
-// Everything is wrapped in the `lunarcss` cascade layer. Styles outside any
-// layer (the user's own CSS) and later layers (e.g. Tailwind's utilities)
-// always override the theme, regardless of selector specificity.
-//
-// @use can't be nested inside @layer, so partials are loaded with
-// meta.load-css() instead. Order below = cascade order.
-// =============================================================================
-
-@use "sass:meta";
-
-@layer lunarcss {
-  // Configuration (CSS Custom Properties / Design Tokens)
-  @include meta.load-css("config");
-
-  // Theme Definitions (Light/Dark mode variables)
-  @include meta.load-css("themes/light");
-  @include meta.load-css("themes/dark");
-
-  // CSS Reset
-  @include meta.load-css("reset");
-
-  // Base Styles (root, html, body)
-  @include meta.load-css("base/root");
-
-  // Element Styles (all HTML elements)
-  @include meta.load-css("elements/section");
-  @include meta.load-css("elements/p");
-  @include meta.load-css("elements/address");
-  @include meta.load-css("elements/headings");
-  @include meta.load-css("elements/hr");
-  @include meta.load-css("elements/blockquote");
-  @include meta.load-css("elements/pre");
-  @include meta.load-css("elements/a");
-  @include meta.load-css("elements/inline");
-  @include meta.load-css("elements/mark");
-  @include meta.load-css("elements/code");
-  @include meta.load-css("elements/kbd");
-  @include meta.load-css("elements/samp");
-  @include meta.load-css("elements/var");
-  @include meta.load-css("elements/lists");
-  @include meta.load-css("elements/tables");
-  @include meta.load-css("elements/fieldset");
-  @include meta.load-css("elements/forms");
-  @include meta.load-css("elements/checkboxes");
-  @include meta.load-css("elements/radios");
-  @include meta.load-css("elements/range");
-  @include meta.load-css("elements/progress");
-  @include meta.load-css("elements/meter");
-  @include meta.load-css("elements/color");
-  @include meta.load-css("elements/buttons");
-  @include meta.load-css("elements/media");
-  @include meta.load-css("elements/details");
-  @include meta.load-css("elements/dialog");
-  @include meta.load-css("elements/popover");
-  @include meta.load-css("elements/article");
-
-  // Print: after the elements, so its rules win over theirs
-  @include meta.load-css("base/print");
-
-  // Forced colors (Windows contrast themes): last, so it overrides the above
-  @include meta.load-css("base/forced-colors");
-}
 ```
 
 ## Tables
