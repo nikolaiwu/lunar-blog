@@ -6,7 +6,7 @@ Statuses: **suspected** (not checked yet) · **confirmed** · **workaround in si
 
 ## Found while building (check in the theme pass)
 
-- **Task list checkboxes**: suspected. GFM task lists render `<input type="checkbox" disabled>` inside `li`s (with a `task-list-item` class we don't style), so each item gets the theme's tick bullet and its vertical-switch checkbox. Check that it reads as a checklist.
+None open.
 
 ## Seeded from the plan (check each one)
 

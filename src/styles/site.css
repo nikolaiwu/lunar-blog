@@ -75,6 +75,40 @@ main > header:has(> h1 + nav) a {
 }
 
 /*
+  Task lists (GFM's "- [x] item"): each item starts with a disabled checkbox,
+  which LunarCSS draws as its full-height switch, after the list's tick.
+  Temporary: the tick becomes a text marker, "[ ]" or "[x]", and the
+  checkbox is hidden but kept, so screen readers still announce its state
+  (the marker's alt text is empty, so it isn't read twice). To be replaced by
+  proper task list styling in the theme.
+*/
+li:has(> input[type="checkbox"]:first-child)::before {
+  content: "[ ]" / "";
+  /* Keeps "[ ]" on one line: the marker is as narrow as it can be */
+  white-space: pre;
+  width: auto;
+  height: auto;
+  font-family: var(--lunar-font-mono);
+  color: var(--lunar-muted);
+  background: none;
+}
+
+li:has(> input[type="checkbox"]:checked:first-child)::before {
+  content: "[x]" / "";
+}
+
+li > input[type="checkbox"]:first-child {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* The marker is wider than the tick: the ol's padding, made for its mono numbers */
+ul:has(> li > input[type="checkbox"]:first-child) {
+  padding-left: var(--lunar-space-10);
+}
+
+/*
   Code highlighting. Shiki runs at build time and gives each token both of
   its colours as custom properties (astro.config.mjs: defaultColor: false),
   so this picks one with light-dark(), following the page's mode. The theme
