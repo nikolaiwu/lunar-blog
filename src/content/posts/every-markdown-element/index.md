@@ -84,6 +84,12 @@ A quote can hold more than one paragraph, and other quotes:
 >
 > > That's the whole point of the layer.
 
+## Horizontal rule
+
+A horizontal rule is a dotted band:
+
+---
+
 ## Code
 
 Inline `code` and `<kbd>` share the cut-corner chip. Fenced code blocks are highlighted at build time, so no JavaScript runs in the browser.
@@ -202,11 +208,3 @@ Space Grotesk ships no italic, so the browser would have to synthesize one by sl
 Adjacent `details` elements join into one list: neighbours share a border, and only the two ends of the run are rounded.
 
 </details>
-
-## Horizontal rule
-
-A horizontal rule is a dotted band:
-
----
-
-That's every element. If one of them looks wrong, it's a gap in the theme, and it gets fixed in LunarCSS, not patched here.
