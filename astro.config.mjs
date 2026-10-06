@@ -120,7 +120,10 @@ export default defineConfig({
       // token gets both themes' colours as --shiki-light / --shiki-dark, and
       // one rule in site.css picks between them with light-dark(), so code
       // follows the page's light or dark mode.
-      themes: { light: "catppuccin-latte", dark: "catppuccin-mocha" },
+      // GitHub Light High Contrast, because no lighter theme keeps its colours
+      // readable (4.5:1) on LunarCSS's beige code background; Catppuccin
+      // Mocha, as in LunarCSS's showcase, passes on the dark one.
+      themes: { light: "github-light-high-contrast", dark: "catppuccin-mocha" },
       // No inline colours or background: the theme's pre look stays
       defaultColor: false,
       // No inline overflow style: LunarCSS's pre scrolls sideways itself,

@@ -1,7 +1,7 @@
 ---
 // A single post: title, dates, tags, hero image and content, then links to
-// the neighbouring posts. The post is an <article> directly in <main>; site.css
-// keeps LunarCSS from drawing it as a card (see docs/theme-gaps.md).
+// the neighbouring posts. The post is the only <article> in <main>, so
+// LunarCSS leaves it plain instead of drawing it as a card.
 import { Image } from "astro:assets";
 import FormattedDate from "../components/FormattedDate.astro";
 import { url } from "../lib/url";
@@ -29,25 +29,26 @@ const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
   <article>
     <header>
       <h1>{title}</h1>
-      <p>
-        Published <FormattedDate date={pubDate} />
-        {updatedDate && (
-          <>
-            {" "}
-            · Updated <FormattedDate date={updatedDate} />
-          </>
-        )}
-      </p>
+      {/* One line of metadata straight in the header, not a <p>: a paragraph
+          gets the theme's bracket and reads as the start of the post */}
+      <small>Published</small> <FormattedDate date={pubDate} />
+      {updatedDate && (
+        <>
+          {" · "}
+          <small>Updated</small> <FormattedDate date={updatedDate} />
+        </>
+      )}
       {tags.length > 0 && (
-        <p>
-          Tagged{" "}
+        <>
+          {" · "}
+          <small>Tagged</small>{" "}
           {tags.map((tag, i) => (
             <>
               {i > 0 && ", "}
               <a href={url(`tags/${tag}/`)}>{tag}</a>
             </>
           ))}
-        </p>
+        </>
       )}
     </header>
 
@@ -64,20 +65,25 @@ const { title, description, pubDate, updatedDate, tags, heroImage } = post.data;
     <slot />
   </article>
 
+  {/* The theme's dotted band between the post and the links to its
+      neighbours */}
   {(newer || older) && (
-    <nav aria-label="More posts">
-      <ul>
-        {newer && (
-          <li>
-            Newer: <a href={url(`posts/${newer.id}/`)}>{newer.data.title}</a>
-          </li>
-        )}
-        {older && (
-          <li>
-            Older: <a href={url(`posts/${older.id}/`)}>{older.data.title}</a>
-          </li>
-        )}
-      </ul>
-    </nav>
+    <>
+      <hr />
+      <nav aria-label="More posts">
+        <ul>
+          {newer && (
+            <li>
+              Newer: <a href={url(`posts/${newer.id}/`)}>{newer.data.title}</a>
+            </li>
+          )}
+          {older && (
+            <li>
+              Older: <a href={url(`posts/${older.id}/`)}>{older.data.title}</a>
+            </li>
+          )}
+        </ul>
+      </nav>
+    </>
   )}
 </Base>

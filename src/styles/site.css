@@ -12,27 +12,6 @@
 */
 
 /*
-  A post is an <article> directly in <main>, and LunarCSS draws every article
-  as a card. That suits the post cards in a grid, not a whole post. This is
-  the reset from the User Guide ("Full-page articles"). Theme gap: see
-  docs/theme-gaps.md ("Full-page article").
-*/
-main > article {
-  padding: 0;
-}
-
-main > article::before,
-main > article::after,
-main > article > footer::before {
-  content: none;
-}
-
-main > article > header {
-  padding-bottom: 0;
-  background: none;
-}
-
-/*
   The site title link starts with the logo (src/assets/logo.svg). LunarCSS
   pads every link on both sides so its tint doesn't end right at the text;
   the logo is a box of its own, so it sits flush with the link's start and
@@ -44,11 +23,32 @@ body > header > a:has(> svg:first-child) {
 }
 
 /*
+  Page headers: the archive's (main > header) and a post's (the header of
+  the full-page article). The header carries the space below it and its h1
+  has no bottom margin (a post's, a small one), so a nav beside the h1 lines
+  up with the heading, and a post's dates sit right under its title. The theme leaves a full-page
+  article plain, so its header has no card spacing of its own, and its last
+  paragraph has no bottom margin.
+*/
+main > header,
+main > article:only-of-type > header {
+  margin-bottom: var(--lunar-space-6);
+}
+
+main > header > h1,
+main > article:only-of-type > header > h1 {
+  margin-bottom: 0;
+}
+
+/* A post's dates and tags are a bare line under the title: a small gap */
+main > article:only-of-type > header > h1 {
+  margin-bottom: var(--lunar-space-2);
+}
+
+/*
   The archive's heading and its view links (cards and list, in
   PostsHeader.astro) share a row, centred on each other. The layout
-  stylesheet only puts a title and a nav on one row in body > header. The
-  h1's bottom margin would pull the centre line up, so the header takes it
-  over (the theme's h1 margin, --lunar-space-6).
+  stylesheet only puts a title and a nav on one row in body > header.
 */
 main > header:has(> h1 + nav) {
   display: flex;
@@ -56,11 +56,6 @@ main > header:has(> h1 + nav) {
   align-items: center;
   justify-content: space-between;
   column-gap: var(--lunar-space-6);
-  margin-bottom: var(--lunar-space-6);
-}
-
-main > header:has(> h1 + nav) > h1 {
-  margin-bottom: 0;
 }
 
 /*
@@ -89,7 +84,7 @@ li:has(> input[type="checkbox"]:first-child)::before {
   width: auto;
   height: auto;
   font-family: var(--lunar-font-mono);
-  color: var(--lunar-muted);
+  color: var(--lunar-muted-text);
   background: none;
 }
 
