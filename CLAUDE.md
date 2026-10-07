@@ -40,7 +40,8 @@ A new blog starts with the demo's name, address and sample posts. To make it the
 2. **Address:** in `astro.config.mjs`, change the `site` and `base` defaults from the demo's (`https://nikolaiwu.github.io`, `/lunar-blog`) to the blog's own, or set `SITE_URL` and `BASE_PATH` when building (see "Deploying"). Canonical URLs, link previews, the RSS feed and the sitemap are built from them, so leaving the demo's values in points them all at the demo.
 3. **Sample posts:** delete everything in `src/content/posts/` and `src/assets/moonrise.svg` (an image two of the samples share), then write the first post. The blog builds with no posts too.
 4. **About page:** rewrite `src/pages/about.md`.
-5. **Look:** replace the logo, icons and preview image, and set the colours (see "Customizing the look").
+5. **Lockfile:** if you installed with npm, yarn or bun, delete the starter's `pnpm-lock.yaml`; your own lockfile replaces it.
+6. **Look:** replace the logo, icons and preview image, and set the colours (see "Customizing the look").
 
 ## Writing a post
 
@@ -106,10 +107,10 @@ The blog can live at a domain root or under a path (the demo is at `/lunar-blog/
 
 ## Deploying
 
-`pnpm build` writes a static site to `dist/`, which any static host can serve. Two settings decide its address, read by `astro.config.mjs`: `SITE_URL`, the origin (`https://example.com`), and `BASE_PATH`, the path it's served under (`/` at a domain root). Set them in the build environment, or change their defaults in the config. Check with `pnpm build && pnpm preview`, which serves the build under its base path, before deploying.
+`npm run build` writes a static site to `dist/`, which any static host can serve. Two settings decide its address, read by `astro.config.mjs`: `SITE_URL`, the origin (`https://example.com`), and `BASE_PATH`, the path it's served under (`/` at a domain root). Set them in the build environment, or change their defaults in the config. Check with `npm run build && npm run preview`, which serves the build under its base path, before deploying.
 
 - **GitHub Pages:** for a project site, `SITE_URL=https://<user>.github.io` and `BASE_PATH=/<repo>`; for a user site or a custom domain, `BASE_PATH=/`. Deploy with a GitHub Actions workflow, as in Astro's guide: https://docs.astro.build/en/guides/deploy/github/. Set the Pages source to GitHub Actions in the repo's settings.
-- **Netlify, Cloudflare Pages, Vercel and similar:** build command `pnpm build`, output directory `dist`, and `SITE_URL` (the site's address) and `BASE_PATH=/` as environment variables in the host's settings.
+- **Netlify, Cloudflare Pages, Vercel and similar:** build command `npm run build` (or your package manager's), output directory `dist`, and `SITE_URL` (the site's address) and `BASE_PATH=/` as environment variables in the host's settings.
 - **Any other static host:** build locally with the right `SITE_URL` and `BASE_PATH`, and upload `dist/`. `404.html` is the not-found page; most hosts pick it up on their own.
 
 The `robots.txt` only counts at the root of a host: under a path, search engines ignore it and find the sitemap through the page's `<link rel="sitemap">` instead.
@@ -128,12 +129,14 @@ If an element looks wrong with real content, it's usually a gap in the theme, no
 
 ## Commands
 
-| Command        | What it does                                |
-| -------------- | ------------------------------------------- |
-| `pnpm dev`     | Dev server with hot reload; drafts included |
-| `pnpm build`   | Build the static site to `dist/`            |
-| `pnpm preview` | Serve the build, under the base path        |
-| `pnpm check`   | Type-check (`astro check`)                  |
-| `pnpm format`  | Format with Prettier; run it after editing  |
+Use the package manager the project was installed with. A new blog comes with the starter's `pnpm-lock.yaml`; if there's also a `package-lock.json`, `yarn.lock` or `bun.lock`, that one is in use, and `pnpm-lock.yaml` can be deleted. The commands are the same scripts in each (`npm run dev`, `pnpm dev`, `yarn dev`, `bun run dev`); with npm:
 
-Astro's dev server keeps running in the background: stop it with `pnpm astro dev stop`.
+| Command           | What it does                                |
+| ----------------- | ------------------------------------------- |
+| `npm run dev`     | Dev server with hot reload; drafts included |
+| `npm run build`   | Build the static site to `dist/`            |
+| `npm run preview` | Serve the build, under the base path        |
+| `npm run check`   | Type-check (`astro check`)                  |
+| `npm run format`  | Format with Prettier; run it after editing  |
+
+Astro's dev server keeps running in the background: stop it with `npx astro dev stop`.

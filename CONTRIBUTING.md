@@ -18,7 +18,7 @@ The comments in the code explain how each part works, and [CLAUDE.md](CLAUDE.md)
 
 ## Setup
 
-You need Node.js 22.12+ and pnpm. The pnpm version is pinned in `package.json` (`packageManager`); run `corepack enable` to use it.
+You need Node.js 22.12+ and pnpm 12: the committed lockfile is pnpm's. Install it with `npm install -g pnpm@12` or `corepack install -g pnpm@12`. (People using the template can install it with any package manager: like Astro's own templates, `package.json` doesn't pin one.)
 
 ```bash
 git clone https://github.com/nikolaiwu/lunar-blog.git
