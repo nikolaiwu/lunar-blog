@@ -9,6 +9,7 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 - Astro 7 project setup: `dev`, `build`, `preview`, `check`, `format` and `format:check` scripts, the strict TypeScript preset, and Prettier with the Astro plugin
 - `site` and `base` are read from the `SITE_URL` and `BASE_PATH` environment variables, defaulting to the GitHub Pages demo at `https://nikolaiwu.github.io/lunar-blog/`
 - MIT license
+- `CONTRIBUTING.md`: principles, setup, commands, local theme mode for working on LunarCSS alongside the blog, conventions, the project structure and the release steps
 - `src/site.config.ts`: the site title, description, author, language, navigation and post counts in one place
 - Base layout with the LunarCSS theme, fonts and layout stylesheet, a header with the site title and navigation, and a footer
 - Light and dark modes that follow the reader's system setting, with no JavaScript

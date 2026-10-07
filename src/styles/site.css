@@ -2,9 +2,8 @@
   Site styles, on top of LunarCSS.
 
   LunarCSS styles every element, so this file stays small. It's unlayered,
-  which means it beats the theme's layers whatever the specificity; never use
-  !important. Every rule says why the theme can't do it, uses var(--lunar-*)
-  tokens only and selects by structure, never by class.
+  which means it beats the theme's layers whatever the specificity, so you
+  never need !important here.
 
   To make the theme yours, set tokens on :root here, e.g.
   --lunar-light, --lunar-dark and --lunar-accent. See the LunarCSS User Guide:
@@ -72,10 +71,10 @@ main > header:has(> h1 + nav) a {
 /*
   Task lists (GFM's "- [x] item"): each item starts with a disabled checkbox,
   which LunarCSS draws as its full-height switch, after the list's tick.
-  Temporary: the tick becomes a text marker, "[ ]" or "[x]", and the
-  checkbox is hidden but kept, so screen readers still announce its state
-  (the marker's alt text is empty, so it isn't read twice). To be replaced by
-  proper task list styling in the theme.
+  Until the theme styles task lists, the tick becomes a text marker, "[ ]"
+  or "[x]", and the checkbox is hidden but kept, so screen readers still
+  announce its state (the marker's alt text is empty, so it isn't read
+  twice).
 */
 li:has(> input[type="checkbox"]:first-child)::before {
   content: "[ ]" / "";

@@ -29,15 +29,23 @@ The maintainer's working checklist is `PUBLISHING.local.md` (gitignored): the mi
 
 ## Architecture
 
-Reference `docs/architecture.md`: the file layout, content collection schema, routes, `site.config.ts`, the Markdown pipeline (Shiki, footnotes, heading anchors), RSS and sitemap.
+Reference `docs/architecture.md`: the content collection schema, routes, `site.config.ts`, the Markdown pipeline (Shiki, footnotes, heading anchors), RSS and sitemap.
 
 ## Using LunarCSS
 
-Reference `docs/lunarcss.md`: import order, cascade layers, the classless markup patterns the theme and layout stylesheet expect (page shell, card grid, full-page article), and local theme mode (`LUNARCSS_LOCAL=../lunarcss pnpm dev`), which live-reloads edits to the LunarCSS source for fixing theme gaps.
+Reference `docs/lunarcss.md`: import order, cascade layers, and the classless markup patterns the theme and layout stylesheet expect (page shell, card grid, full-page article).
 
-## Conventions
+## Contributing
 
-Reference `docs/conventions.md`: package manager, formatting, dependencies, accessibility, commits and issue tracking.
+Reference `CONTRIBUTING.md`: principles, setup and commands, local theme mode (`LUNARCSS_LOCAL=../lunarcss pnpm dev`, for fixing theme gaps), markup and `site.css` conventions, dependencies, accessibility checks, the project structure and the release steps.
+
+For you specifically:
+
+- Commit straight to `main`; no feature branches unless the user asks.
+- Don't commit, push, tag, publish, file issues or submit to directories without being asked.
+- Track this repo's bugs and features as GitHub Issues on `nikolaiwu/lunar-blog` via `gh`. Theme problems go to `nikolaiwu/lunarcss`.
+- For a theme gap, ask the user whether to file a LunarCSS issue (`gh issue create -R nikolaiwu/lunarcss`) or fix it in `../lunarcss` directly. Read `../lunarcss/CLAUDE.md` before editing there, and commit in each repo separately. A session started with `claude --add-dir ../lunarcss` can edit both.
+- When a change affects anything described in `docs/` or `CONTRIBUTING.md`, update it in the same commit, and add a `CHANGELOG.md` line.
 
 ## Deploying and publishing
 

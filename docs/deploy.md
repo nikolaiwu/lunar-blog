@@ -24,7 +24,7 @@ npm create astro@latest -- --template nikolaiwu/lunar-blog
 - Whatever is on `main` is what users get. Keep it building, and keep the lockfile committed.
 - `.github/workflows/` ships too. The Pages workflow is useful to users; make sure nothing in it is specific to this repo beyond defaults they can change.
 - Settle the open question in [brief.md](brief.md) about `CLAUDE.md` and `docs/` shipping to users before release.
-- Test the real command in a temp directory before every release, and after any change to `package.json` or config.
+- Test the real command in a temp directory before every release (see [CONTRIBUTING.md](../CONTRIBUTING.md#releasing)).
 
 ## README
 
@@ -46,4 +46,4 @@ Submit at https://astro.build/themes/submit/ **only when the user asks**. It nee
 
 ## Releases
 
-Tag `vX.Y.Z` on `main` with a matching `CHANGELOG.md` section, and create a GitHub release. There's no npm package; the template is the repo. Only tag or release when the user asks.
+The release steps, including the template install test, are in [CONTRIBUTING.md](../CONTRIBUTING.md#releasing). Only tag or release when the user asks.

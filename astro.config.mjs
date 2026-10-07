@@ -60,14 +60,9 @@ const tableScroll = {
   },
 };
 
-// Local theme mode, for working on LunarCSS itself:
-//
-//   LUNARCSS_LOCAL=../lunarcss pnpm dev
-//
-// compiles the theme and layout from that checkout's SCSS source instead of
-// the published package, and reloads the page styles when you save a partial.
-// Fonts still come from the package. Without the variable, nothing changes.
-// See docs/lunarcss.md.
+// Local theme mode, for developing LunarCSS alongside the blog (see
+// CONTRIBUTING.md). It does nothing unless LUNARCSS_LOCAL is set, so you can
+// leave it, or delete this function and the `vite` line below.
 function localTheme(dir) {
   if (!dir) return {};
 
@@ -120,9 +115,9 @@ export default defineConfig({
       // token gets both themes' colours as --shiki-light / --shiki-dark, and
       // one rule in site.css picks between them with light-dark(), so code
       // follows the page's light or dark mode.
-      // GitHub Light High Contrast, because no lighter theme keeps its colours
-      // readable (4.5:1) on LunarCSS's beige code background; Catppuccin
-      // Mocha, as in LunarCSS's showcase, passes on the dark one.
+      // Any Shiki themes work here (https://shiki.style/themes). Check their
+      // contrast on LunarCSS's code background: these two stay readable, but
+      // most light themes are too pale for its beige.
       themes: { light: "github-light-high-contrast", dark: "catppuccin-mocha" },
       // No inline colours or background: the theme's pre look stays
       defaultColor: false,

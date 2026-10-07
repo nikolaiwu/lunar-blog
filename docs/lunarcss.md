@@ -46,32 +46,6 @@ The theme draws with `::before` and `::after` on several elements (cards, `h1`â€
 - Light and dark come from `light-dark()` plus `color-scheme`. `data-theme="light|dark"` on `<html>` forces a mode, and without it the page follows the system setting. The blog never sets it, so it always follows the system (see [architecture.md](architecture.md), "Light and dark").
 - Never use raw colours or `--color-*` primitives.
 
-## Changing the theme itself
+## Fixing the theme
 
-When something is a theme gap, not a starter problem:
-
-1. Add it to [theme-gaps.md](theme-gaps.md) with the markup that triggers it and a screenshot or description.
-2. Ask the user whether to file a `nikolaiwu/lunarcss` issue (`gh issue create -R nikolaiwu/lunarcss`) or fix it in `../lunarcss` directly. That repo has its own CLAUDE.md and rules: read `../lunarcss/CLAUDE.md` before editing there, and commit in each repo separately. A session started with `claude --add-dir ../lunarcss` can edit both.
-3. Develop the fix against the blog with **local theme mode** (below), then check it on the LunarCSS showcase and demo too. The theme must stay generic, so a change that only makes sense for this blog belongs in `site.css`, not the theme.
-4. After LunarCSS releases the fix: bump `@nikolaiwu/lunarcss` here, run without local mode, remove the workaround from `site.css`, and update [theme-gaps.md](theme-gaps.md).
-
-## Local theme mode
-
-`LUNARCSS_LOCAL=../lunarcss pnpm dev` compiles the theme and layout from the LunarCSS **SCSS source** in that checkout, instead of the published package. Vite watches the partials, so saving a file in `../lunarcss/src/scss/` updates the blog in the browser: no LunarCSS build, no release, and no second process.
-
-How it's wired in `astro.config.mjs`, only when `LUNARCSS_LOCAL` is set:
-
-- `vite.resolve.alias` maps exactly `@nikolaiwu/lunarcss` to `<path>/src/scss/main.scss` and `@nikolaiwu/lunarcss/layout` to `<path>/src/scss/layout.scss`. Use anchored regexes (`/^@nikolaiwu\/lunarcss$/`) so the two don't catch each other, or `/fonts`. Fonts always come from the npm package: `fonts.scss` only resolves inside the LunarCSS build, and fonts rarely change.
-- `vite.server.fs.allow` lists the project root and `<path>/src/scss`, since Vite refuses to serve files outside the project otherwise. Setting `allow` replaces Vite's default, so the project root has to be in the list. It's written out instead of using Vite's `searchForWorkspaceRoot()`, because pnpm doesn't let the config import `vite` without adding it as a dependency, and in this single-package repo both give the same folder.
-- The config fails fast with a clear error if `<path>/src/scss/main.scss` doesn't exist, and logs one line saying the local theme is in use, so it's never on by accident.
-- `sass` is a dev dependency (Vite needs it to compile the SCSS). Keep its range in line with LunarCSS's.
-
-Why this and not `pnpm add ../lunarcss` (a `link:` dependency): the link changes `package.json` and the lockfile, which is easy to commit by mistake, and the package's exports point at the built `dist/`, so every theme edit would need a LunarCSS build. Local mode leaves the dependencies untouched, so `main`, CI and template users always get the published theme.
-
-Things to keep in mind:
-
-- Local mode is the unminified source, not the published `dist/`. The difference is only minification and the banner, but the final check is always a normal `pnpm build` against the released version.
-- Don't commit blog changes that depend on an unreleased theme fix (such as removing a `site.css` workaround) until that LunarCSS version is released and the dependency is bumped. Otherwise `main` breaks for everyone.
-- `pnpm build` and `pnpm preview` also respect `LUNARCSS_LOCAL`, which is handy for checking a theme change in the built blog before releasing LunarCSS.
-- After you save a partial, Vite recompiles the theme module and hot-reloads it. The CSS that Astro inlines into the page HTML for first paint can lag behind, though: in a test with curl, a fresh page request still carried the old value while the module had the new one. If a reload looks stale, restart the dev server.
-- Astro's dev server keeps running in the background after you close the terminal. Stop it with `pnpm astro dev stop`, and check with `pnpm astro dev status`.
+Theme gaps are fixed in LunarCSS, developed against this blog with local theme mode (`LUNARCSS_LOCAL=../lunarcss pnpm dev`). The workflow is in [CONTRIBUTING.md](../CONTRIBUTING.md#working-on-lunarcss-alongside-the-blog).

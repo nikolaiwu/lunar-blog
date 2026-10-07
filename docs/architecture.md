@@ -2,45 +2,7 @@
 
 A static Astro site (`output: "static"`, no adapter). Everything is rendered at build time, and no script runs in the browser.
 
-## File layout
-
-```
-lunar-blog/
-├── astro.config.mjs          # site, base, integrations, Markdown/Shiki config
-├── src/
-│   ├── site.config.ts        # the one file users edit first: title, author, nav…
-│   ├── content.config.ts     # the posts collection and its schema
-│   ├── content/posts/        # sample posts (.md and .mdx), co-located images
-│   ├── assets/               # logo.svg (the header logo, inlined by Astro);
-│   │                         # moonrise.svg (an image two sample posts share);
-│   │                         # icons/ (the archive's cards and list icons)
-│   ├── layouts/
-│   │   ├── Base.astro        # <html>, head, page shell (header, main, footer)
-│   │   └── Post.astro        # a single post
-│   ├── components/           # Figure, FormattedDate, PostCard, PostsHeader, Seo
-│   │                         # (grids, pagination and tag links are inline)
-│   ├── lib/
-│   │   ├── url.ts            # url(): base-path-aware internal links
-│   │   └── posts.ts          # published posts, newest first
-│   ├── pages/
-│   │   ├── index.astro       # intro and latest posts
-│   │   ├── posts/[...page].astro  # archive as cards: /posts/, /posts/2/ …
-│   │   ├── posts/list.astro  # archive as a list: /posts/list/
-│   │   ├── posts/[id].astro  # a post: /posts/<id>/
-│   │   ├── tags/index.astro  # all tags with post counts
-│   │   ├── tags/[tag].astro  # posts with that tag
-│   │   ├── about.md          # example standalone page, using Base
-│   │   ├── 404.astro
-│   │   ├── rss.xml.ts
-│   │   └── robots.txt.ts     # robots.txt, with the sitemap URL from `site` + `base`
-│   └── styles/site.css       # the small unlayered stylesheet (see conventions)
-├── design/                   # og-image.py (writes og-image.svg) and
-│                             # og-image-png.sh (renders public/og-image.png);
-│                             # apple-touch-icon.sh (renders it from favicon.svg)
-└── public/                   # favicon.svg, apple-touch-icon.png, og-image.png
-```
-
-Treat this as the target shape, not a fixed contract. If current Astro conventions differ (file names, collection config location), follow Astro and update this file.
+The file layout is in [CONTRIBUTING.md](../CONTRIBUTING.md#project-structure). If current Astro conventions differ from it (file names, collection config location), follow Astro and update it.
 
 ## Content collection
 
