@@ -38,7 +38,7 @@ A new blog starts with the demo's name, address and sample posts. To make it the
 
 1. **Name and details:** in `src/site.config.ts`, set `title`, `description`, `author`, `lang` (a BCP 47 tag such as `en` or `en-GB`) and `nav`.
 2. **Address:** in `astro.config.mjs`, change the `site` and `base` defaults from the demo's (`https://nikolaiwu.github.io`, `/lunar-blog`) to the blog's own, or set `SITE_URL` and `BASE_PATH` when building (see "Deploying"). Canonical URLs, link previews, the RSS feed and the sitemap are built from them, so leaving the demo's values in points them all at the demo.
-3. **Sample posts:** delete everything in `src/content/posts/` and `src/assets/moonrise.svg` (an image two of the samples share), then write the first post. The blog builds with no posts too.
+3. **Sample posts:** delete everything in `src/content/posts/` and `src/assets/moonrise.svg` (an image two of the samples share), then write the first post. The blog builds with no posts too. The starter's README and its screenshot (`.github/screenshot.png`) are the demo's as well.
 4. **About page:** rewrite `src/pages/about.md`.
 5. **Lockfile:** if you installed with npm, yarn or bun, delete the starter's `pnpm-lock.yaml`; your own lockfile replaces it.
 6. **Look:** replace the logo, icons and preview image, and set the colours (see "Customizing the look").

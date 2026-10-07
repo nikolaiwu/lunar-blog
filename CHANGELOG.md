@@ -9,6 +9,7 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 - Astro 7 project setup: `dev`, `build`, `preview`, `check`, `format` and `format:check` scripts, the strict TypeScript preset, and Prettier with the Astro plugin
 - `site` and `base` are read from the `SITE_URL` and `BASE_PATH` environment variables, defaulting to the GitHub Pages demo at `https://nikolaiwu.github.io/lunar-blog/`
 - MIT license
+- README, with a light and dark screenshot of the home page: install, features, getting started (with the frontmatter reference), customizing, deploying and credits
 - Installs with any package manager (npm, pnpm, yarn or bun): `package.json` doesn't pin one, as Astro's own templates don't, and approves esbuild's install script for npm (`allowScripts`)
 - `CLAUDE.md` for building your blog with Claude Code: how the starter is built, where things are, writing posts and pages, the markup the theme expects, the base path, customizing, and where to report problems
 - `CONTRIBUTING.md`: principles, setup, commands, fixing the theme, conventions, the project structure and the release steps
