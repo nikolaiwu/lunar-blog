@@ -11,7 +11,7 @@ The first release: an Astro blog starter styled by LunarCSS, with no classes and
 **Setup**
 
 - Astro 7, with `dev`, `build`, `preview`, `check`, `format` and `format:check` scripts, the strict TypeScript preset, and Prettier with the Astro plugin
-- Installs with any package manager (npm, pnpm, yarn or bun): `package.json` doesn't pin one, as Astro's own templates don't, and approves esbuild's install script for npm (`allowScripts`)
+- Installs with any package manager (npm, pnpm, yarn or bun): `package.json` doesn't pin one, as Astro's own templates don't, and settles the install scripts npm asks about (`allowScripts`): esbuild's runs; fsevents' is skipped, since it ships prebuilt
 - `src/site.config.ts`: the site title, description, author, language, navigation, post counts and default preview image in one place
 - `site` and `base` read from the `SITE_URL` and `BASE_PATH` environment variables, defaulting to the GitHub Pages demo at `https://nikolaiwu.github.io/lunar-blog/`, so the blog works at a domain root or under a path
 - A GitHub Actions workflow that deploys to GitHub Pages on every push to `main`, built on Astro's deploy action. It gets the site's address from GitHub, so it works for a project site, a user site or a custom domain without changes, and installs with whichever package manager's lockfile is in the repo

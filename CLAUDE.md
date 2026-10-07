@@ -42,7 +42,8 @@ A new blog starts with the demo's name, address and sample posts. To make it the
 4. **About page:** rewrite `src/pages/about.md`.
 5. **Lockfile:** if you installed with npm, yarn or bun, delete the starter's `pnpm-lock.yaml`; your own lockfile replaces it.
 6. **Deploy workflow:** `.github/workflows/pages.yml` deploys to GitHub Pages on every push to `main`. If the blog won't be on GitHub Pages, delete it; otherwise each push runs it and it fails.
-7. **Look:** replace the logo, icons and preview image, and set the colours (see "Customizing the look").
+7. **AGENTS.md:** `create astro` writes a generic Astro `AGENTS.md` into every new project, for coding agents other than Claude Code. It doesn't know this blog's rules. If you use another agent, replace its contents with `Read CLAUDE.md.`; otherwise delete it.
+8. **Look:** replace the logo, icons and preview image, and set the colours (see "Customizing the look").
 
 ## Writing a post
 

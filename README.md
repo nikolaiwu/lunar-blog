@@ -35,7 +35,7 @@ Or with pnpm: `pnpm create astro@latest --template nikolaiwu/lunar-blog`. Then `
 
 1. **Make it yours:** set the title, description, author, language and navigation in [`src/site.config.ts`](src/site.config.ts).
 2. **Set its address:** in [`astro.config.mjs`](astro.config.mjs), change the `site` and `base` defaults (the demo's) to your own, or set them when you deploy (see [Deploying](#deploying)). Links, previews, the feed and the sitemap are built from them.
-3. **Clear the samples:** delete everything in `src/content/posts/` and `src/assets/moonrise.svg`, and rewrite `src/pages/about.md` and this README (its screenshot is `.github/screenshot.png`). If you installed with npm, yarn or bun, delete the starter's `pnpm-lock.yaml` too.
+3. **Clear the samples:** delete everything in `src/content/posts/` and `src/assets/moonrise.svg`, and rewrite `src/pages/about.md` and this README (its screenshot is `.github/screenshot.png`). If you installed with npm, yarn or bun, delete the starter's `pnpm-lock.yaml` too. `create astro` also adds a generic `AGENTS.md`: for a coding agent other than Claude Code, replace its contents with `Read CLAUDE.md.`, or delete it.
 4. **Write a post:** add a Markdown file to `src/content/posts/`. Its name is its URL: `hello-world.md` becomes `/posts/hello-world/`.
 
 ```md
