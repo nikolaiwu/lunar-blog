@@ -4,34 +4,53 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 
 ## [Unreleased]
 
+The first release: an Astro blog starter styled by LunarCSS, with no classes and no client JavaScript.
+
 ### Added
 
-- Astro 7 project setup: `dev`, `build`, `preview`, `check`, `format` and `format:check` scripts, the strict TypeScript preset, and Prettier with the Astro plugin
-- `site` and `base` are read from the `SITE_URL` and `BASE_PATH` environment variables, defaulting to the GitHub Pages demo at `https://nikolaiwu.github.io/lunar-blog/`
-- MIT license
-- README, with a light and dark screenshot of the home page: install, features, getting started (with the frontmatter reference), customizing, deploying and credits
+**Setup**
+
+- Astro 7, with `dev`, `build`, `preview`, `check`, `format` and `format:check` scripts, the strict TypeScript preset, and Prettier with the Astro plugin
 - Installs with any package manager (npm, pnpm, yarn or bun): `package.json` doesn't pin one, as Astro's own templates don't, and approves esbuild's install script for npm (`allowScripts`)
-- `CLAUDE.md` for building your blog with Claude Code: how the starter is built, where things are, writing posts and pages, the markup the theme expects, the base path, customizing, and where to report problems
-- `CONTRIBUTING.md`: principles, setup, commands, fixing the theme, conventions, the project structure and the release steps
-- `src/site.config.ts`: the site title, description, author, language, navigation and post counts in one place
-- Base layout with the LunarCSS theme, fonts and layout stylesheet, a header with the site title and navigation, and a footer
-- Light and dark modes that follow the reader's system setting, with no JavaScript
-- A `posts` content collection with a typed schema (title, description, dates, tags, drafts, hero image with required alt text)
-- Eight sample posts about building LunarCSS, plus a draft, including an "every Markdown element" reference post and an MDX post
-- MDX support, and a classless `Figure` component for images with captions
+- `src/site.config.ts`: the site title, description, author, language, navigation, post counts and default preview image in one place
+- `site` and `base` read from the `SITE_URL` and `BASE_PATH` environment variables, defaulting to the GitHub Pages demo at `https://nikolaiwu.github.io/lunar-blog/`, so the blog works at a domain root or under a path
+
+**Posts**
+
+- A `posts` content collection with a typed schema: title, description, dates, tags (lower-case slugs, checked), drafts that show only in dev, and a hero image with required alt text
+- Markdown and MDX, with a classless `Figure` component for images with captions
+- Syntax highlighting at build time with GitHub Light High Contrast and Catppuccin Mocha, following the system's light or dark mode. The light theme is chosen for readable contrast on LunarCSS's code background
+- Wide tables scroll sideways on their own instead of making the whole page scroll: each Markdown table is wrapped in a `div`, which LunarCSS scrolls
 - A horizontal rule between a post and its footnotes
-- Wide tables in posts scroll sideways on their own, instead of making the whole page scroll on small screens: each Markdown table is wrapped in a `div`, which LunarCSS scrolls
-- Syntax highlighting at build time with GitHub Light High Contrast and Catppuccin Mocha, following the system's light or dark mode, with no JavaScript. The light theme is chosen for readable contrast on LunarCSS's code background
-- Home page: the site intro and the latest posts as a card grid, with a `PostCard` component shared by every list of posts
-- Post archive at `/posts/`, `/posts/2/` and so on, `postsPerPage` cards per page, with newer and older page links
-- A list view of the archive at `/posts/list/`: every post on one page, by title and date. Icon links next to the Posts heading switch between the cards and the list, with no JavaScript
-- Tag pages: `/tags/` lists every tag with its post count, and `/tags/<tag>/` shows that tag's posts. Tags must be lower-case slugs such as `dark-mode`, which the schema checks
+- Task list items marked `[ ]` and `[x]`, with the checkbox kept for screen readers
+- Nine sample posts about building LunarCSS (one a draft), including an "Every Markdown element" reference post and an MDX post
+
+**Pages**
+
+- Home page: the site intro and the latest posts as a card grid
+- Post archive as cards at `/posts/`, `/posts/2/` and so on, and as one list at `/posts/list/`, with icon links beside the heading to switch views
+- Post pages at `/posts/<id>/`: the title with the dates and tags on one line under it, a responsive hero image, the post, and links to the newer and older posts after a rule
+- Tag pages: `/tags/` lists every tag with its post count, and `/tags/<tag>/` shows that tag's posts
+- An About page in plain Markdown (`src/pages/about.md`), as the example of a standalone page, and a 404 page
+
+**Look**
+
+- LunarCSS with its self-hosted fonts and layout stylesheet, and one small stylesheet of our own (`src/styles/site.css`), each rule commented
+- Light and dark modes that follow the reader's system setting, with no JavaScript
+- A header with a logo (`src/assets/logo.svg`, inlined and sized in `em`), the site title and navigation that marks the current page; a footer that stays at the bottom of short pages
+- A favicon and an Apple touch icon: LunarCSS's accent box with a cut corner, holding a few lines of writing
+
+**Feeds and SEO**
+
 - An RSS feed at `/rss.xml`, linked from every page's `<head>` and footer
 - A sitemap at `/sitemap-index.xml`, and a `robots.txt` that points to it
-- A logo in the header, before the site title: `src/assets/logo.svg`, inlined and sized in `em` to match the title
-- A favicon and an Apple touch icon: LunarCSS's accent box with a cut corner, holding a few lines of writing
-- A default link preview image, `public/og-image.png`, matching LunarCSS's social card
-- Link previews and SEO tags on every page: canonical URL, Open Graph and a Twitter card. Posts use their hero image as the preview when they have one; the 404 page is kept out of search results
-- An About page in plain Markdown (`src/pages/about.md`), as the example of a standalone page
-- A 404 page
-- Post pages at `/posts/<id>/`: title, published and updated dates, tags, a responsive hero image, the post, and links to the newer and older posts
+- Canonical URLs, Open Graph and a Twitter card on every page. Posts use their hero image as the preview; other pages use `public/og-image.png`, which matches LunarCSS's social card. The 404 page is kept out of search results
+
+**Docs**
+
+- README, with a light and dark screenshot of the home page: install, features, getting started (with the frontmatter reference), customizing, deploying and credits
+- `CLAUDE.md` for building your blog with Claude Code: how the starter is built, where things are, making it yours, posts and pages, the markup the theme expects, deploying, customizing, and where to report problems
+- `CONTRIBUTING.md`: principles, setup, commands, fixing the theme, conventions, the project structure and the release steps
+- MIT license
+
+[Unreleased]: https://github.com/nikolaiwu/lunar-blog/commits/main
