@@ -32,6 +32,16 @@ These choices hold the starter together. Keep to them unless the blog's owner de
 | `public/`                | `favicon.svg`, `apple-touch-icon.png`, `og-image.png`                                       |
 | `astro.config.mjs`       | Site URL and base path, Markdown and code highlighting                                      |
 
+## Making it yours
+
+A new blog starts with the demo's name, address and sample posts. To make it the owner's:
+
+1. **Name and details:** in `src/site.config.ts`, set `title`, `description`, `author`, `lang` (a BCP 47 tag such as `en` or `en-GB`) and `nav`.
+2. **Address:** in `astro.config.mjs`, change the `site` and `base` defaults from the demo's (`https://nikolaiwu.github.io`, `/lunar-blog`) to the blog's own, or set `SITE_URL` and `BASE_PATH` when building (see "Deploying"). Canonical URLs, link previews, the RSS feed and the sitemap are built from them, so leaving the demo's values in points them all at the demo.
+3. **Sample posts:** delete everything in `src/content/posts/` and `src/assets/moonrise.svg` (an image two of the samples share), then write the first post. The blog builds with no posts too.
+4. **About page:** rewrite `src/pages/about.md`.
+5. **Look:** replace the logo, icons and preview image, and set the colours (see "Customizing the look").
+
 ## Writing a post
 
 A post is a file in `src/content/posts/`. Its name is its URL: `hello-world.md` becomes `/posts/hello-world/`. A post with its own images is a folder, `hello-world/index.md`, with the images beside it. A name can't be only digits (`/posts/2/` is an archive page) or `list` (`/posts/list/` is the list view); the build stops if it is.
@@ -94,12 +104,21 @@ For a page with logic, write an `.astro` file that wraps its content in `<Base t
 
 The blog can live at a domain root or under a path (the demo is at `/lunar-blog/`). Build every internal link and asset URL with `url()` from `src/lib/url.ts`: `url("posts/")`, `url("tags/css/")`. Never hard-code a leading `/`: it works in dev and breaks once deployed under a path. In Markdown posts, use relative links (`../other-post/`).
 
-To deploy, set `SITE_URL` (e.g. `https://example.com`) and `BASE_PATH` (`/` for a domain root) in the build environment; `astro.config.mjs` reads them. `pnpm build && pnpm preview` serves the build under its base path, to check links before deploying.
+## Deploying
+
+`pnpm build` writes a static site to `dist/`, which any static host can serve. Two settings decide its address, read by `astro.config.mjs`: `SITE_URL`, the origin (`https://example.com`), and `BASE_PATH`, the path it's served under (`/` at a domain root). Set them in the build environment, or change their defaults in the config. Check with `pnpm build && pnpm preview`, which serves the build under its base path, before deploying.
+
+- **GitHub Pages:** for a project site, `SITE_URL=https://<user>.github.io` and `BASE_PATH=/<repo>`; for a user site or a custom domain, `BASE_PATH=/`. Deploy with a GitHub Actions workflow, as in Astro's guide: https://docs.astro.build/en/guides/deploy/github/. Set the Pages source to GitHub Actions in the repo's settings.
+- **Netlify, Cloudflare Pages, Vercel and similar:** build command `pnpm build`, output directory `dist`, and `SITE_URL` (the site's address) and `BASE_PATH=/` as environment variables in the host's settings.
+- **Any other static host:** build locally with the right `SITE_URL` and `BASE_PATH`, and upload `dist/`. `404.html` is the not-found page; most hosts pick it up on their own.
+
+The `robots.txt` only counts at the root of a host: under a path, search engines ignore it and find the sitemap through the page's `<link rel="sitemap">` instead.
 
 ## Customizing the look
 
 - **Colours:** set tokens on `:root` in `site.css`. The main pair is `--lunar-light` and `--lunar-dark` (light mode uses the light one as the background, dark mode swaps them), plus `--lunar-accent`. `--lunar-muted-mix` and `--lunar-muted-text-mix` tune the muted tones.
-- **Fonts, spacing, sizes:** every token is in the [LunarCSS User Guide](https://github.com/nikolaiwu/lunarcss/blob/main/USER-GUIDE.md). Read it before changing how something looks.
+- **Spacing, sizes and the rest:** every token is in the [LunarCSS User Guide](https://github.com/nikolaiwu/lunarcss/blob/main/USER-GUIDE.md). Read it before changing how something looks.
+- **Fonts:** the theme uses Space Grotesk and Space Mono, served with the blog by the `@nikolaiwu/lunarcss/fonts` import in `Base.astro`. To use other fonts, self-host them (a Fontsource package, or font files in `public/` with `@font-face` in `site.css`), set `--lunar-font-sans` and `--lunar-font-mono` on `:root`, and remove the fonts import if neither default font is still used. Don't load them from Google Fonts or another CDN.
 - **Logo:** replace `src/assets/logo.svg`. It's inlined into the header link, so set its size in `em` in the file (`width` sets it; the height follows the `viewBox`).
 - **Icons and preview image:** replace `public/favicon.svg`, `public/apple-touch-icon.png` (180×180, opaque) and `public/og-image.png` (1200×630, used by pages without a hero image), and update `ogImageAlt` in `site.config.ts`.
 
