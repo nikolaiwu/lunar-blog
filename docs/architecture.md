@@ -62,7 +62,7 @@ A typed object: `title`, `description`, `author`, `lang` (for `<html lang>`), `n
 
 - Posts pass `article` (published and updated times, tags), so they get `og:type="article"` and `article:*` tags.
 - A post with a hero image uses it as its preview, resized by `getImage()` to a 1200px-wide JPEG. Every other page uses `siteConfig.ogImage` from `public/`.
-- That default, `public/og-image.png`, is generated to match LunarCSS's own social card: `python3 design/og-image.py` writes `design/og-image.svg` from the theme's geometry (update its colours and shapes when the theme's look changes), then either export it from Figma at 1x, as the theme does, or run `sh design/og-image-png.sh` to render it with headless Chrome and the packaged fonts. Update `ogImageAlt` if the picture changes.
+- That default, `public/og-image.png`, matches LunarCSS's own social card. Its generator lives in the LunarCSS repo, in [design/lunar-blog/](https://github.com/nikolaiwu/lunarcss/tree/main/design/lunar-blog), along with the script for `public/apple-touch-icon.png`, so the template ships without them. Update `ogImageAlt` if the picture changes.
 - The 404 page passes `noindex`: it gets `<meta name="robots" content="noindex">` and no canonical URL.
 
 ## Markdown pipeline

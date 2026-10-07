@@ -27,7 +27,7 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 - A sitemap at `/sitemap-index.xml`, and a `robots.txt` that points to it
 - A logo in the header, before the site title: `src/assets/logo.svg`, inlined and sized in `em` to match the title
 - A favicon and an Apple touch icon: LunarCSS's accent box with a cut corner, holding a few lines of writing
-- A default link preview image, `public/og-image.png`, matching LunarCSS's social card, with its generator in `design/`
+- A default link preview image, `public/og-image.png`, matching LunarCSS's social card. Its generator, and the touch icon's, live in the LunarCSS repo (`design/lunar-blog/`), so the template ships without them
 - Link previews and SEO tags on every page: canonical URL, Open Graph and a Twitter card. Posts use their hero image as the preview when they have one; the 404 page is kept out of search results
 - An About page in plain Markdown (`src/pages/about.md`), as the example of a standalone page
 - A 404 page
