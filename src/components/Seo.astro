@@ -34,7 +34,8 @@ const documentTitle = title
 const metaDescription = description ?? siteConfig.description;
 const canonical = new URL(Astro.url.pathname, site);
 
-// A 1200px-wide JPEG of the page's image, or the site's default image
+// A JPEG of the page's image, at most 1200px wide (Astro never enlarges, so
+// a narrower image keeps its width), or the site's default image
 let ogImage = {
   src: new URL(url(siteConfig.ogImage), site),
   alt: siteConfig.ogImageAlt,
@@ -42,7 +43,11 @@ let ogImage = {
   height: 630,
 };
 if (image) {
-  const resized = await getImage({ src: image, width: 1200, format: "jpg" });
+  const resized = await getImage({
+    src: image,
+    width: Math.min(image.width, 1200),
+    format: "jpg",
+  });
   ogImage = {
     src: new URL(resized.src, site),
     alt: imageAlt ?? "",

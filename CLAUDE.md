@@ -41,7 +41,8 @@ A new blog starts with the demo's name, address and sample posts. To make it the
 3. **Sample posts:** delete everything in `src/content/posts/` and `src/assets/moonrise.svg` (an image two of the samples share), then write the first post. The blog builds with no posts too. The starter's README and its screenshot (`.github/screenshot.png`) are the demo's as well.
 4. **About page:** rewrite `src/pages/about.md`.
 5. **Lockfile:** if you installed with npm, yarn or bun, delete the starter's `pnpm-lock.yaml`; your own lockfile replaces it.
-6. **Look:** replace the logo, icons and preview image, and set the colours (see "Customizing the look").
+6. **Deploy workflow:** `.github/workflows/pages.yml` deploys to GitHub Pages on every push to `main`. If the blog won't be on GitHub Pages, delete it; otherwise each push runs it and it fails.
+7. **Look:** replace the logo, icons and preview image, and set the colours (see "Customizing the look").
 
 ## Writing a post
 
@@ -109,7 +110,7 @@ The blog can live at a domain root or under a path (the demo is at `/lunar-blog/
 
 `npm run build` writes a static site to `dist/`, which any static host can serve. Two settings decide its address, read by `astro.config.mjs`: `SITE_URL`, the origin (`https://example.com`), and `BASE_PATH`, the path it's served under (`/` at a domain root). Set them in the build environment, or change their defaults in the config. Check with `npm run build && npm run preview`, which serves the build under its base path, before deploying.
 
-- **GitHub Pages:** for a project site, `SITE_URL=https://<user>.github.io` and `BASE_PATH=/<repo>`; for a user site or a custom domain, `BASE_PATH=/`. Deploy with a GitHub Actions workflow, as in Astro's guide: https://docs.astro.build/en/guides/deploy/github/. Set the Pages source to GitHub Actions in the repo's settings.
+- **GitHub Pages:** the included workflow, `.github/workflows/pages.yml`, builds and deploys on every push to `main`. Set the Pages source to GitHub Actions in the repo's settings, once. The workflow gets the site's address from GitHub and sets `SITE_URL` and `BASE_PATH` itself, so it's right for a project site (`<user>.github.io/<repo>`), a user site or a custom domain, with nothing to change.
 - **Netlify, Cloudflare Pages, Vercel and similar:** build command `npm run build` (or your package manager's), output directory `dist`, and `SITE_URL` (the site's address) and `BASE_PATH=/` as environment variables in the host's settings.
 - **Any other static host:** build locally with the right `SITE_URL` and `BASE_PATH`, and upload `dist/`. `404.html` is the not-found page; most hosts pick it up on their own.
 

@@ -1,0 +1,62 @@
+# Builds the blog and deploys it to GitHub Pages on every push to main. It can
+# also be run by hand from the Actions tab.
+#
+# Needs, once: Settings → Pages → Source: GitHub Actions. The site's address
+# comes from GitHub, so it's right for a project site (<user>.github.io/<repo>),
+# a user site or a custom domain, with no changes here or in astro.config.mjs.
+#
+# Not deploying to GitHub Pages? Delete this file; otherwise every push to main
+# runs it, and it fails.
+
+name: Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read # check out the code
+  pages: write # publish the site
+  id-token: write # prove to Pages that the deploy comes from this workflow
+
+# One deploy at a time. A newer one waits rather than cancelling a deploy
+# that's already running, which could leave the site half-published.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Reads the Pages settings, including the site's address
+      - id: pages
+        uses: actions/configure-pages@v6
+
+      # Hands the address to astro.config.mjs as SITE_URL and BASE_PATH. The
+      # base path is empty at a domain root, which the blog wants as "/".
+      - name: Set the site's address
+        env:
+          ORIGIN: ${{ steps.pages.outputs.origin }}
+          BASE: ${{ steps.pages.outputs.base_path }}
+        run: |
+          echo "SITE_URL=$ORIGIN" >> "$GITHUB_ENV"
+          echo "BASE_PATH=${BASE:-/}" >> "$GITHUB_ENV"
+
+      # Astro's deploy action: installs with the package manager whose
+      # lockfile is in the repo, builds, and uploads dist/ for Pages
+      - uses: withastro/action@v6
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

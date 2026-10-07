@@ -123,7 +123,9 @@ lunar-blog/
 │   │   └── robots.txt.ts
 │   └── styles/site.css       # the small unlayered stylesheet
 ├── public/                   # favicon.svg, apple-touch-icon.png, og-image.png
-├── .github/screenshot.png    # the README's screenshot
+├── .github/
+│   ├── workflows/pages.yml   # deploys to GitHub Pages on pushes to main
+│   └── screenshot.png        # the README's screenshot
 ├── CHANGELOG.md
 ├── CLAUDE.md                 # guidance for Claude Code
 └── CONTRIBUTING.md

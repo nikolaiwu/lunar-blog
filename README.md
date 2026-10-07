@@ -85,9 +85,9 @@ Keep the markup classless: the theme styles elements by what they are. If someth
 
 `npm run build` writes a static site to `dist/`. Two settings decide its address: `SITE_URL`, the origin (`https://example.com`), and `BASE_PATH`, the path it's served under (`/` at a domain root). Set them as environment variables when building, or change the defaults in `astro.config.mjs`.
 
-- **GitHub Pages:** for a project site, `SITE_URL=https://<user>.github.io` and `BASE_PATH=/<repo>`; for a user site or a custom domain, `BASE_PATH=/`. Deploy with a GitHub Actions workflow, as in [Astro's guide](https://docs.astro.build/en/guides/deploy/github/).
-- **Netlify, Cloudflare Pages, Vercel and similar:** build command `npm run build`, output directory `dist`, with `SITE_URL` and `BASE_PATH=/` in the host's environment variables.
-- **Any static host:** build with the right `SITE_URL` and `BASE_PATH`, and upload `dist/`.
+- **GitHub Pages:** the included workflow (`.github/workflows/pages.yml`) deploys on every push to `main`. Set **Settings → Pages → Source** to **GitHub Actions**, once. It gets the site's address from GitHub, so a project site, a user site and a custom domain all work with nothing to change.
+- **Netlify, Cloudflare Pages, Vercel and similar:** build command `npm run build`, output directory `dist`, with `SITE_URL` and `BASE_PATH=/` in the host's environment variables. Delete `.github/workflows/pages.yml`, or every push runs it and it fails.
+- **Any static host:** build with the right `SITE_URL` and `BASE_PATH`, and upload `dist/`. Delete the workflow here too.
 
 Check with `npm run build && npm run preview` before deploying: it serves the build under its base path, so broken links show up.
 
