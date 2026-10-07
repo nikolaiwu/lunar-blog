@@ -3,4 +3,4 @@ allowBuilds:
   esbuild: true
   sharp: true
 minimumReleaseAgeExclude:
-  - "@nikolaiwu/lunarcss@0.1.1"
+  - "@nikolaiwu/lunarcss@0.2.0"

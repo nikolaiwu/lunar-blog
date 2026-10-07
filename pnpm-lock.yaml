@@ -179,8 +179,8 @@ importers:
         specifier: ^3.7.4
         version: 3.7.4
       '@nikolaiwu/lunarcss':
-        specifier: ^0.1.1
-        version: 0.1.1
+        specifier: ^0.2.0
+        version: 0.2.0
       astro:
         specifier: ^7.3.5
         version: 7.3.5(@types/node@24.19.0)(sass@1.105.0)(yaml@2.9.1)
@@ -846,8 +846,8 @@ packages:
       '@emnapi/core': ^1.7.1 || ^2.0.0-alpha.4
       '@emnapi/runtime': ^1.7.1 || ^2.0.0-alpha.4
 
-  '@nikolaiwu/lunarcss@0.1.1':
-    resolution: {integrity: sha512-cjulD7XggtYh+uW7uL8XRMOjkSa/z7JXFczriptGfrCJrJlVNzu4cKuWI6RI4OQznDv7fg+t/wOn2VKEzF/asQ==}
+  '@nikolaiwu/lunarcss@0.2.0':
+    resolution: {integrity: sha512-HBEj1LpVCdZpOdVPDzWH2nvkOTj2PLsYN6JHEqNMRKpMW6+5elyBtyd9ZGlq5UWm4pUoODP8/R08OOLYG8AMow==}
 
   '@nodable/entities@3.1.0':
     resolution: {integrity: sha512-LsS/DjHr+uDM647Gru/cA8+J3a3HfhttwCKLyuoyN7yXTFCxKBtSgMQBvrW9yNPa2/zDRUNuGPaH5QUFoa4arQ==}
@@ -2686,7 +2686,7 @@ snapshots:
       '@emnapi/runtime': 1.11.3
       '@tybys/wasm-util': 0.10.4
 
-  '@nikolaiwu/lunarcss@0.1.1': {}
+  '@nikolaiwu/lunarcss@0.2.0': {}
 
   '@nodable/entities@3.1.0': {}
 
