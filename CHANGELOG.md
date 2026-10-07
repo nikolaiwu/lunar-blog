@@ -4,6 +4,8 @@ All notable changes to Lunar Blog are documented here. The format follows [Keep 
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-10-07
+
 The first release: an Astro blog starter styled by LunarCSS, with no classes and no client JavaScript.
 
 ### Added
@@ -54,4 +56,5 @@ The first release: an Astro blog starter styled by LunarCSS, with no classes and
 - `CONTRIBUTING.md`: principles, setup, commands, fixing the theme, conventions, the project structure and the release steps
 - MIT license
 
-[Unreleased]: https://github.com/nikolaiwu/lunar-blog/commits/main
+[Unreleased]: https://github.com/nikolaiwu/lunar-blog/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/nikolaiwu/lunar-blog/releases/tag/v1.0.0
