@@ -1,7 +1,3 @@
-import { existsSync } from "node:fs";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { styleText } from "node:util";
 import { satteri } from "@astrojs/markdown-satteri";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
@@ -12,8 +8,6 @@ import { defineConfig } from "astro/config";
 // Astro doesn't load .env files here, so set these in the shell or in CI.
 const site = process.env.SITE_URL ?? "https://nikolaiwu.github.io";
 const base = process.env.BASE_PATH ?? "/lunar-blog";
-
-const projectRoot = fileURLToPath(new URL(".", import.meta.url));
 
 // Puts a horizontal rule before a post's footnotes, so the notes read as
 // separate from the post. It's a real <hr>, so LunarCSS draws it as its dotted
@@ -60,47 +54,6 @@ const tableScroll = {
   },
 };
 
-// Local theme mode, for developing LunarCSS alongside the blog (see
-// CONTRIBUTING.md). It does nothing unless LUNARCSS_LOCAL is set, so you can
-// leave it, or delete this function and the `vite` line below.
-function localTheme(dir) {
-  if (!dir) return {};
-
-  const scss = path.join(path.resolve(dir), "src/scss");
-  if (!existsSync(path.join(scss, "main.scss"))) {
-    throw new Error(
-      `LUNARCSS_LOCAL is "${dir}", but there's no ${scss}/main.scss. ` +
-        "Point it at a LunarCSS checkout, or unset it to use the published package.",
-    );
-  }
-  // styleText drops the bold when the output isn't a terminal or NO_COLOR is set
-  console.info(
-    styleText(
-      "bold",
-      `🏠 [lunar-blog] Using the local LunarCSS source in ${scss}`,
-    ),
-  );
-
-  return {
-    resolve: {
-      // Anchored, so the theme alias doesn't also catch /layout or /fonts
-      alias: [
-        {
-          find: /^@nikolaiwu\/lunarcss$/,
-          replacement: path.join(scss, "main.scss"),
-        },
-        {
-          find: /^@nikolaiwu\/lunarcss\/layout$/,
-          replacement: path.join(scss, "layout.scss"),
-        },
-      ],
-    },
-    // Vite only serves files inside the project unless told otherwise.
-    // Setting allow replaces the default, so the project stays in the list.
-    server: { fs: { allow: [projectRoot, scss] } },
-  };
-}
-
 // https://astro.build/config
 export default defineConfig({
   site,
@@ -126,5 +79,4 @@ export default defineConfig({
       wrap: null,
     },
   },
-  vite: localTheme(process.env.LUNARCSS_LOCAL),
 });

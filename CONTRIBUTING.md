@@ -8,13 +8,13 @@ Lunar Blog is also the first real-world test of [LunarCSS](https://github.com/ni
 
 1. **No classes in our markup.** Layouts, components, pages and posts use semantic elements, and LunarCSS styles them with element selectors. Generated markup (Shiki, footnotes, task lists) may carry classes, but we never style through them.
 2. **Almost no CSS of our own.** `src/styles/site.css` stays small and unlayered, and every rule has a comment saying why the theme can't do it. No component `<style>` blocks, no inline `style`.
-3. **Theme gaps go upstream.** If real content exposes something LunarCSS doesn't handle, log it in [docs/theme-gaps.md](docs/theme-gaps.md) and fix it in the theme. A workaround in `site.css` is temporary.
+3. **Theme gaps go upstream.** If real content exposes something LunarCSS doesn't handle, the fix belongs in the theme. A workaround in `site.css` is temporary.
 4. **Tokens, not values.** Any CSS we write uses `var(--lunar-*)` tokens, never raw colours or sizes.
 5. **No third-party requests.** Fonts are self-hosted through the LunarCSS fonts stylesheet. No Google Fonts, analytics, embeds or CDN scripts in the template.
 6. **Zero client JavaScript.** Light and dark follow the reader's system setting; there's no theme toggle, no UI framework islands and no view transitions.
 7. **Every URL respects `base`.** Internal links and assets go through `url()` in `src/lib/url.ts`, so the blog works at a domain root and under a path like `/lunar-blog/`.
 
-The [docs/](docs/) folder explains how the starter is built: the [architecture](docs/architecture.md) (content schema, routes, the Markdown pipeline, SEO), [how it uses LunarCSS](docs/lunarcss.md), [deploying](docs/deploy.md), and the project [brief](docs/brief.md).
+The comments in the code explain how each part works, and [CLAUDE.md](CLAUDE.md) sums up how the blog is built: where things are, writing posts, the markup the theme expects and the base path rule.
 
 ## Setup
 
@@ -44,31 +44,11 @@ pnpm only runs the install scripts of dependencies listed under `allowBuilds` in
 
 Astro's dev server keeps running in the background after you close the terminal. Stop it with `pnpm astro dev stop`, and check on it with `pnpm astro dev status`.
 
-## Working on LunarCSS alongside the blog
+## Fixing the theme
 
-To fix a theme gap, check out LunarCSS next to this repo and run the blog against its source:
+When an element looks wrong with real content, the fix usually belongs in [LunarCSS](https://github.com/nikolaiwu/lunarcss): open an issue there, or a pull request following its own CONTRIBUTING.md. The theme must stay generic, so a change that only makes sense for this blog belongs in `site.css`.
 
-```bash
-LUNARCSS_LOCAL=../lunarcss pnpm dev
-```
-
-This **local theme mode** compiles the theme and layout stylesheet from that checkout's SCSS instead of the published package, and Vite reloads the page styles when you save a partial in `../lunarcss/src/scss/`: no LunarCSS build or release in between. Fonts still come from the package. The console says when it's on, and a wrong path stops with an error. `pnpm build` and `pnpm preview` respect it too.
-
-It leaves `package.json` and the lockfile alone, so nothing about it can be committed by mistake. (A `link:` dependency would change both, and would need a LunarCSS build for every edit, since the package exports its built `dist/`.)
-
-The workflow for a theme gap:
-
-1. Log it in [docs/theme-gaps.md](docs/theme-gaps.md): the markup that triggers it, what goes wrong, and what we do meanwhile.
-2. Open an issue on LunarCSS, or fix it in the LunarCSS checkout (following its own CONTRIBUTING.md) and commit there separately.
-3. Develop the fix in local theme mode, then check it on the LunarCSS showcase and demo too. The theme must stay generic: a change that only makes sense for this blog belongs in `site.css`.
-4. Once LunarCSS releases the fix, bump `@nikolaiwu/lunarcss` here, check a normal `pnpm build`, remove any workaround from `site.css`, and remove the entry from theme-gaps.md.
-
-Keep in mind:
-
-- Local mode compiles the unminified source. The final check is always a normal build against the released version.
-- Don't push blog changes that depend on an unreleased theme fix (such as removing a workaround). `main` is what template users install, so it has to work with the published theme.
-- After you save a partial, the CSS Astro inlines for first paint can lag behind the hot-reloaded module. If a page looks stale, restart the dev server.
-- `sass` is a dev dependency only for this mode. Keep its range in line with LunarCSS's.
+Until the fix is released, a small workaround in `site.css` is fine, with a comment linking the issue. Don't change the blog in a way that depends on an unreleased theme fix: `main` is what template users install, so it has to work with the published theme. Once the release is out, bump `@nikolaiwu/lunarcss` and remove the workaround.
 
 ## Making a change
 
@@ -76,7 +56,7 @@ Keep in mind:
 
 - Semantic elements first: `header`, `nav`, `main`, `article`, `aside`, `footer`, `time`, `figure`/`figcaption`. Keep heading levels in order on every page.
 - `data-*` and ARIA attributes are fine as hooks (for example `aria-current`, or an `aria-label` on a second `nav`).
-- Write markup that matches the patterns the theme and its layout stylesheet expect (page shell, card grid, full-page article), not CSS that fights them. See [docs/lunarcss.md](docs/lunarcss.md).
+- Write markup that matches the patterns the theme and its layout stylesheet expect (page shell, card grid, full-page article), not CSS that fights them. See "Markup the theme expects" in [CLAUDE.md](CLAUDE.md).
 - Watch the spaces between text and tags in `.astro` files. Astro drops the whitespace where a line of text ends and the next line starts with a tag or `{expression}`, so `or the` followed by `<a>` on the next line renders as "or the<a>". End such lines with `{" "}` (Prettier keeps it), or build the text as one string, and check the built HTML.
 
 ### `site.css`
@@ -102,7 +82,7 @@ Keep them few: `astro`, `@nikolaiwu/lunarcss`, `@astrojs/mdx`, `@astrojs/markdow
 - Run `pnpm format`, `pnpm check` and `pnpm build`.
 - Check the change with `pnpm build && pnpm preview`, which serves under the base path: a hard-coded `/posts/…` works in dev and breaks there.
 - Look at it in light and dark mode, at phone width (360px, with no sideways page scroll), in Chrome, Firefox and Safari.
-- Keep the docs in step: [docs/](docs/) when how something works changes.
+- Keep the code comments, [CLAUDE.md](CLAUDE.md) and this file in step when how something works changes.
 - Add a line under `[Unreleased]` in [CHANGELOG.md](CHANGELOG.md).
 
 ## Pull requests
@@ -143,12 +123,10 @@ lunar-blog/
 │   │   └── robots.txt.ts
 │   └── styles/site.css       # the small unlayered stylesheet
 ├── public/                   # favicon.svg, apple-touch-icon.png, og-image.png
-├── docs/                     # how the starter is built
 ├── CHANGELOG.md
+├── CLAUDE.md                 # guidance for Claude Code
 └── CONTRIBUTING.md
 ```
-
-The preview image (`public/og-image.png`) and the touch icon (`public/apple-touch-icon.png`) are generated by tools in the LunarCSS repo, [design/lunar-blog/](https://github.com/nikolaiwu/lunarcss/tree/main/design/lunar-blog), so the template ships without them. Its README says how to run them against this checkout.
 
 ## Releasing
 
